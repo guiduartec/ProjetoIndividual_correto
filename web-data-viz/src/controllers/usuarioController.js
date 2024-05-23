@@ -1,5 +1,5 @@
 var usuarioModel = require("../models/usuarioModel");
-var aquarioModel = require("../models/aquarioModel");
+//var aquarioModel = require("../models/aquarioModel");
 
 function autenticar(req, res) {
     var email = req.body.emailServer;
@@ -20,24 +20,24 @@ function autenticar(req, res) {
                     if (resultadoAutenticar.length == 1) {
                         console.log(resultadoAutenticar);
 
-                        aquarioModel.buscarAquariosPorEmpresa(resultadoAutenticar[0].empresaId)
-                            .then((resultadoAquarios) => {
-                                if (resultadoAquarios.length > 0) {
-                                    res.json({
-                                        id: resultadoAutenticar[0].id,
-                                        email: resultadoAutenticar[0].email,
-                                        nome: resultadoAutenticar[0].nome,
-                                        // cpf: resultadoAutenticar[0].cpf,
-                                        senha: resultadoAutenticar[0].senha,
-                                        aquarios: resultadoAquarios
-                                    });
-                                } else {
-                                    res.status(204).json({ aquarios: [] });
-                                }
-                            })
-                    } else if (resultadoAutenticar.length == 0) {
+                        if (resultadoAutenticar.length > 0) {
+                            res.json({
+                                id: resultadoAutenticar[0].id,
+                                email: resultadoAutenticar[0].email,
+                                nome: resultadoAutenticar[0].nome,
+                                // cpf: resultadoAutenticar[0].cpf,
+                                senha: resultadoAutenticar[0].senha,
+                            });
+                        }
+                        else {
+                            res.status(204).json({ aquarios: [] });
+                        }
+
+                    }
+                    else if (resultadoAutenticar.length == 0) {
                         res.status(403).send("Email e/ou senha inválido(s)");
-                    } else {
+                    }
+                    else {
                         res.status(403).send("Mais de um usuário com o mesmo login e senha!");
                     }
                 }
@@ -53,56 +53,62 @@ function autenticar(req, res) {
 }
 
 function cadastrar(req, res) {
-    // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
+    // Variável que recupera os valores do cadastro.html
     var nome = req.body.nomeServer;
     var email = req.body.emailServer;
-    // var cpf = req.body.cpfServer;
     var senha = req.body.senhaServer;
+    var confirmacaoSenha = req.body.confirmacaoServer;
+    // var cpf = req.body.cpfServer;
     // var empresaId = req.body.empresaServer;
     var nomecaractere = nome.length;
-    var confirmacaosenha = senha;
-    var numerocpf = cpf.length;
-    var arroba = emailVar.indexOf('@');
-    var ponto = emailVar.indexOf('.');
-    
-    
+    //var numerocpf = cpf.length;
+    var arroba = req.body.emailServer.indexOf('@');
+    var ponto = req.body.emailServer.indexOf('.');
 
-    // Faça as validações dos valores
+    console.log("VALORES RECEBIDOS: ")
+    console.log(nome)
+    console.log(email)
+    console.log(senha)
+    console.log(confirmacaoSenha)
+
+
+
+    // Validações
     if (nome == undefined) {
-        res.status(400).send("Seu nome está undefined!");
+        res.status(400).send("Seu nome está indefinido!");
     } else if (email == undefined) {
-        res.status(400).send("Seu email está undefined!");
+        res.status(400).send("Seu email está indefinido!");
     }
     // else if (cpf == undefined) {
     //     res.status(400).send("Seu cpf está undefined!");
     // }
-     else if (senha == undefined) {
-        res.status(400).send("Sua senha está undefined!");
-    } 
+    else if (senha == undefined) {
+        res.status(400).send("Sua senha está indefinida!");
+    }
     // else if (empresaId == undefined) {
     //     res.status(400).send("Sua empresa está undefined!");
     // } 
     else if (nomecaractere <= 1) {
         res.status(400).send("Falta um caracter no seu nome!");
-    } else if (confirmacaosenhasenha != senha) {
+    } else if (confirmacaoSenha != senha) {
         res.status(400).send("Senha inválida");
     }
     //  else if (numerocpf != 11) {
     //     res.status(400).send("Cpf inválido");
     // }
-     else if (arroba < 0) {
+    else if (arroba < 0) {
         res.status(400).send("Falta um caracter no email");
     } else if (ponto < 0) {
         res.status(400).send("Falta um caracter no email");
     } else if (senha <= 6) {
         res.status(400).send("Senha incompleta");
     }
-    
-    
+
+
     else {
 
         // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-        usuarioModel.cadastrar(nome, email, cpf, senha, empresaId)
+        usuarioModel.cadastrar(nome, email, senha)
             .then(
                 function (resultado) {
                     res.json(resultado);

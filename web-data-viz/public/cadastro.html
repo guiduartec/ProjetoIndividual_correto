@@ -57,7 +57,7 @@
                      -->
           <div class="campo">
             <!-- <span>Empresa:</span>
-            <select name="empresas" id="listaEmpresas">
+            <select name="empresas" id="regiao">
               <option selected>Selecione uma empresa</option>
             </select> -->
           </div>
@@ -81,13 +81,24 @@
             <span>Confirmação da Senha:</span>
             <input id="confirmacao_senha_input" type="password" placeholder="******" />
           </div>
-          <button class="botao" onclick="cadastrar()">Cadastrar</button>
+          <!-- <div class="campo">
+            <span>Selecione a sua região:</span>
+            <select name="" id="regiao">
+              <option value="#">Selecione uma opção</option>
+              <option value="1">Norte</option>
+              <option value="2">Sul</option>
+              <option value="3">Leste</option>
+              <option value="4">Oeste</option>
+              <option value="5">Nordeste</option>
+              <option value="6">Centro-Oeste</option>
+            </select>
+          </div> -->
+          <div id="div_erros_login"></div>
         </div>
-        <div id="div_aguardar" class="loading-div">
-          <img src="./assets/circle-loading.gif" id="loading-gif" />
-        </div>
-
-        <div id="div_erros_login"></div>
+        <button class="botao" onclick="cadastrar()">Cadastrar</button>
+      </div>
+      <div id="div_aguardar" class="loading-div">
+        <img src="./assets/circle-loading.gif" id="loading-gif" />
       </div>
     </div>
   </div>
@@ -115,7 +126,6 @@
     var senhaVar = senha_input.value;
     // var cpfVar = cpf_input.value;
     var confirmacaoSenhaVar = confirmacao_senha_input.value;
-    // var empresaVar = listaEmpresas.value
     var arroba = emailVar.indexOf('@');
     var ponto = emailVar.indexOf('.');
 
@@ -125,8 +135,7 @@
       emailVar == "" ||
       senhaVar == "" ||
       // cpfVar == "" ||
-      confirmacaoSenhaVar == "" ||
-      empresaVar == ""
+      confirmacaoSenhaVar == ""
     ) {
       cardErro.style.display = "block";
       mensagem_erro.innerHTML =
@@ -165,6 +174,14 @@
       finalizarAguardar();
       return false;
     }
+    // else if (regiaoVar == '#') {
+    //   cardErro.style.display = "block";
+    //   mensagem_erro.innerHTML =
+    //     "(Selecione uma região!)"
+    //   finalizarAguardar();
+    //   return false;
+    // }
+
     // else if (cpfVar.length != 11) {
     //   cardErro.style.display = "block";
     //   mensagem_erro.innerHTML =
@@ -177,6 +194,7 @@
       setInterval(sumirMensagem, 5000);
     }
 
+
     // Enviando o valor da nova input
     fetch("/usuarios/cadastrar", {
       method: "POST",
@@ -188,10 +206,9 @@
         // Agora vá para o arquivo routes/usuario.js
         nomeServer: nomeVar,
         emailServer: emailVar,
-        // cpfServer: cpfVar,
         senhaServer: senhaVar,
-        // empresaServer: empresaVar
-      }),
+        confirmacaoServer: confirmacaoSenhaVar
+      })
     })
       .then(function (resposta) {
         console.log("resposta: ", resposta);
@@ -217,26 +234,25 @@
         finalizarAguardar();
       });
 
-    return false;
-  }
 
-  // function listar() {
-  //   fetch("/empresas/listar", {
-  //     method: "GET",
-  //   })
-  //     .then(function (resposta) {
-  //       resposta.json().then((empresas) => {
-  //         empresas.forEach((empresa) => {
-  //           listaEmpresas.innerHTML += `<option value='${empresa.id}'>${empresa.cnpj}</option>`;
-  //         });
-  //       });
-  //     })
-  //     .catch(function (resposta) {
-  //       console.log(`#ERRO: ${resposta}`);
-  //     });
-  // }
+    // function listar() {
+    //   fetch("/empresas/listar", {
+    //     method: "GET",
+    //   })
+    //     .then(function (resposta) {
+    //       resposta.json().then((empresas) => {
+    //         empresas.forEach((empresa) => {
+    //           regiao.innerHTML += `<option value='${empresa.id}'>${empresa.cnpj}</option>`;
+    //         });
+    //       });
+    //     })
+    //     .catch(function (resposta) {
+    //       console.log(`#ERRO: ${resposta}`);
+    //     });
+    // }
 
-  function sumirMensagem() {
-    cardErro.style.display = "none";
+    function sumirMensagem() {
+      cardErro.style.display = "none";
+    }
   }
 </script>

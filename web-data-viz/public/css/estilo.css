@@ -23,6 +23,7 @@ body {
   display: flex;
   width: 80%;
   margin: auto;
+
 }
 
 .header {
@@ -129,19 +130,43 @@ body {
 .footer {
   background-color: transparent;
   backdrop-filter: blur(5px);
-  height: 100px;
+  height: 25px;
   color: white;
   display: flex;
+  flex-direction: column;
+  justify-content: space space-between;
+  padding: 35px;
   font-size: 15px;
 }
-
-.footer .container {
+.footer a{
+  display: flex;
+  text-decoration: none;
+  color: white;
   justify-content: center;
-  text-align: center;
-}
-
-.footer .container .version {
+  /* display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
   font-size: 12px;
+  margin: 0px;
+  margin: 20px;
+  text-decoration: none;
+  color: white; */
+}
+.footer h4{
+  display: flex;
+  text-decoration: none;
+  color: white;
+  justify-content: center;
+  }
+
+.footer .version{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  font-size: 12px;
+  margin: 0px;
 }
 
 /* LOGIN */
