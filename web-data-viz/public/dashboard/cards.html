@@ -6,6 +6,263 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Quiz</title>
+
+    <link rel="stylesheet" href="../css/dashboards.css">
+    <link rel="stylesheet" href="./../css/estilo.css" />
+
+    <script src="../js/sessao.js"></script>
+    <script src="./../js/alerta.js"></script>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
+        rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://kit.fontawesome.com/9f7414eb10.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="janela">
+        <div class="header-left">
+            <h1>Praias</h1>
+            <div class="hello">
+                <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
+            </div>
+            <div class="btn-nav-white">
+                <a href="./mainPage.html">
+                    <h3>Geral</h3>
+                </a>
+            </div>
+            <div class="btn-nav">
+                <h3>Quiz</h3>
+            </div>
+            <div class="btn-nav-white">
+                <a href="./post.html">
+                    <h3>Post</h3>
+                </a>
+            </div>
+            <div class="btn-logout" onclick="limparSessao()">
+                <h3>Sair</h3>
+            </div>
+        </div>
+        <div class="dash">
+            <div id="quizContainer">
+                <div id="inicarQuiz">
+                    <h1>Sobre Praias</h1>
+                    <p>Me fale um pouco sobre Você</p>
+                    <button onclick="iniciar()">Iniciar</button>
+                </div>
+                <div id="quiz" style="display: none;">
+                    <div id="pergunta1" class="pergunta">
+                        <h2>Em qual ano o São Paulo Futebol Clube foi fundado?</h2>
+                        <button onclick="responder(this, '1930')">1925</button>
+                        <button onclick="responder(this, '1930')">1930</button>
+                        <button onclick="responder(this, '1930')">1940</button>
+                        <button onclick="responder(this, '1930')">1950</button>
+                    </div>
+                    <div id="pergunta2" class="pergunta" style="display: none;">
+                        <h2>Quais são as três cores oficiais do São Paulo FC?</h2>
+                        <button onclick="responder(this, 'Vermelho, branco e preto')">Azul, amarelo e branco</button>
+                        <button onclick="responder(this, 'Vermelho, branco e preto')">Verde, branco e amarelo</button>
+                        <button onclick="responder(this, 'Vermelho, branco e preto')">Vermelho, branco e preto</button>
+                        <button onclick="responder(this, 'Vermelho, branco e preto')">Vermelho, amarelo e verde</button>
+                    </div>
+                    <div id="pergunta3" class="pergunta" style="display: none;">
+                        <h2>O que representa cada símbolo no escudo do time?</h2>
+                        <button
+                            onclick="responder(this, 'O escudo do São Paulo FC representa o estado de São Paulo, com o Triângulo e o Monumento às Bandeiras')">Um
+                            pinheiro</button>
+                        <button
+                            onclick="responder(this, 'O escudo do São Paulo FC representa o estado de São Paulo, com o Triângulo e o Monumento às Bandeiras')">O
+                            escudo do São Paulo FC representa o estado de São Paulo, com o Triângulo e o Monumento às
+                            Bandeiras</button>
+                        <button
+                            onclick="responder(this, 'O escudo do São Paulo FC representa o estado de São Paulo, com o Triângulo e o Monumento às Bandeiras')">Um
+                            leão</button>
+                        <button
+                            onclick="responder(this, 'O escudo do São Paulo FC representa o estado de São Paulo, com o Triângulo e o Monumento às Bandeiras')">Um
+                            escudo com as cores do Brasil</button>
+                    </div>
+                    <div id="pergunta4" class="pergunta" style="display: none;">
+                        <h2>Qual é o nome do estádio do São Paulo?</h2>
+                        <button onclick="responder(this, 'Morumbi')">Pacaembu</button>
+                        <button onclick="responder(this, 'Morumbi')">Morumbi</button>
+                        <button onclick="responder(this, 'Morumbi')">Maracanã</button>
+                        <button onclick="responder(this, 'Morumbi')">Allianz Parque</button>
+                    </div>
+                    <div id="pergunta5" class="pergunta" style="display: none;">
+                        <h2>Quantos títulos da Libertadores o São Paulo tem?</h2>
+                        <button onclick="responder(this, '3')">2</button>
+                        <button onclick="responder(this, '3')">3</button>
+                        <button onclick="responder(this, '3')">4</button>
+                        <button onclick="responder(this, '3')">5</button>
+                    </div>
+                    <div id="pergunta6" class="pergunta" style="display: none;">
+                        <h2>Qual é o maior artilheiro da história do São Paulo FC?</h2>
+                        <button onclick="responder(this, 'Serginho Chulapa')">Raí</button>
+                        <button onclick="responder(this, 'Serginho Chulapa')">Careca</button>
+                        <button onclick="responder(this, 'Serginho Chulapa')">Serginho Chulapa</button>
+                        <button onclick="responder(this, 'Serginho Chulapa')">Cícero</button>
+                    </div>
+                </div>
+                <div id="resultados" style="display: none;">
+                    <h2>Resultados do Quiz</h2>
+                    <canvas id="graficoResultados"></canvas>
+                    <div id="indicadores">
+                        <p>Média de acertos: <span id="media"></span></p>
+                        <p>Você está <span id="acimaOuAbaixo"></span> da média.</p>
+                        <p>Desempenho: <span id="desempenho"></span></p>
+                    </div>
+                    <button onclick="voltar()">Voltar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Define o nome do usuário a partir da sessão
+        const b_usuario = document.getElementById('b_usuario');
+        if (sessionStorage.NOME_USUARIO) {
+            b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
+        } else {
+            b_usuario.innerHTML = 'usuário';
+        }
+
+        let respostasCorretas = 0;
+        let respostasIncorretas = 0;
+
+        function iniciar() {
+            document.getElementById('inicarQuiz').style.display = 'none';
+            document.getElementById('quiz').style.display = 'block';
+        }
+
+        let perguntaAtual = 1;
+        let totalDePerguntas = 6; // Corrigido para o número real de perguntas
+
+        function responder(botao, respostaCorreta) {
+            const respostaSelecionada = botao.textContent;
+            if (respostaSelecionada === respostaCorreta) {
+                respostasCorretas++;
+            } else {
+                respostasIncorretas++;
+            }
+            document.getElementById("pergunta" + perguntaAtual).style.display = "none";
+            if (perguntaAtual < totalDePerguntas) {
+                perguntaAtual++;
+                document.getElementById("pergunta" + perguntaAtual).style.display = "block";
+            } else {
+                exibirResultados();
+            }
+        }
+
+        function obterIdUsuario() {
+            return sessionStorage.ID_USUARIO || 'desconhecido';
+        }
+
+        function exibirResultados() {
+            const fk_usuario = obterIdUsuario();
+            document.getElementById("quiz").style.display = "none";
+            document.getElementById("resultados").style.display = "block";
+
+            const totalRespostas = respostasCorretas + respostasIncorretas;
+            const media = (respostasCorretas / totalRespostas) * 100;
+            document.getElementById("media").textContent = media.toFixed(2) + "%";
+
+            const mediaGeral = 70;
+            if (media >= mediaGeral) {
+                document.getElementById("acimaOuAbaixo").textContent = "acima";
+            } else {
+                document.getElementById("acimaOuAbaixo").textContent = "abaixo";
+            }
+
+            let desempenho = '';
+            if (media >= 80) {
+                desempenho = 'Bom';
+            } else if (media >= 50) {
+                desempenho = 'Médio';
+            } else {
+                desempenho = 'Ruim';
+            }
+            document.getElementById("desempenho").textContent = desempenho;
+
+            fetch('/medidas/salvar-resultados', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    acertos: respostasCorretas,
+                    erros: respostasIncorretas,
+                    fk_usuario: fk_usuario
+                })
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erro ao salvar resultados');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Resultados salvos com sucesso:', data);
+                })
+                .catch(error => {
+                    console.error('Erro ao salvar resultados:', error);
+                });
+
+            const ctx = document.getElementById('graficoResultados').getContext('2d');
+            const quizChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Respostas Corretas', 'Respostas Incorretas'],
+                    datasets: [{
+                        label: 'Quantidade',
+                        data: [respostasCorretas, respostasIncorretas],
+                        backgroundColor: [
+                            'rgba(75, 192, 192)',
+                            'rgba(255, 99, 132)',
+                        ],
+                        borderColor: [
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(255, 99, 132, 1)',
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        function voltar() {
+            window.location.href = './mainPage.html';
+        }
+
+        function limparSessao() {
+            sessionStorage.clear();
+            window.location.href = './index.html';
+        }
+    </script>
+</body>
+
+</html>
+
+
+<!-- <!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <link rel="shortcut icon" href="../assets/icon/favicon2.ico" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AquaTech | Tempo Real</title>
 
 
@@ -117,4 +374,4 @@
 
 </script>
 
-</html>
+</html> -->
