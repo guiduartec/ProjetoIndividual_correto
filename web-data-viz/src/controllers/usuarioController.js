@@ -1,5 +1,4 @@
 var usuarioModel = require("../models/usuarioModel");
-//var aquarioModel = require("../models/aquarioModel");
 
 function autenticar(req, res) {
     var email = req.body.emailServer;
@@ -25,7 +24,6 @@ function autenticar(req, res) {
                                 idUsuario: resultadoAutenticar[0].idUsuario,
                                 email: resultadoAutenticar[0].email,
                                 nome: resultadoAutenticar[0].nome,
-                                // cpf: resultadoAutenticar[0].cpf,
                                 senha: resultadoAutenticar[0].senha,
                             });
                         }
@@ -58,10 +56,7 @@ function cadastrar(req, res) {
     var email = req.body.emailServer;
     var senha = req.body.senhaServer;
     var confirmacaoSenha = req.body.confirmacaoServer;
-    // var cpf = req.body.cpfServer;
-    // var empresaId = req.body.empresaServer;
     var nomecaractere = nome.length;
-    //var numerocpf = cpf.length;
     var arroba = req.body.emailServer.indexOf('@');
     var ponto = req.body.emailServer.indexOf('.');
 
@@ -78,25 +73,13 @@ function cadastrar(req, res) {
         res.status(400).send("Seu nome está indefinido!");
     } else if (email == undefined) {
         res.status(400).send("Seu email está indefinido!");
-    }
-    // else if (cpf == undefined) {
-    //     res.status(400).send("Seu cpf está undefined!");
-    // }
-    else if (senha == undefined) {
+    } else if (senha == undefined) {
         res.status(400).send("Sua senha está indefinida!");
-    }
-    // else if (empresaId == undefined) {
-    //     res.status(400).send("Sua empresa está undefined!");
-    // } 
-    else if (nomecaractere <= 1) {
+    } else if (nomecaractere <= 1) {
         res.status(400).send("Falta um caracter no seu nome!");
     } else if (confirmacaoSenha != senha) {
         res.status(400).send("Senha inválida");
-    }
-    //  else if (numerocpf != 11) {
-    //     res.status(400).send("Cpf inválido");
-    // }
-    else if (arroba < 0) {
+    } else if (arroba < 0) {
         res.status(400).send("Falta um caracter no email");
     } else if (ponto < 0) {
         res.status(400).send("Falta um caracter no email");
@@ -150,9 +133,70 @@ function jogar_banco(req, res) {
             );
 }
 
+function SelectQuiz(req,res){
+    var idUsuario = req.body.idUsuarioServer
+
+    usuarioModel.SelectQuiz(idUsuario)
+    .then(
+        function (resultadoChamar_Quiz) {
+
+            res.json({
+                resultadoChamar_Quiz
+            });
+}
+    )
+}
+
+function SelectQuiz(req,res){
+    var idUsuario = req.body.idUsuarioServer
+
+    usuarioModel.SelectQuiz(idUsuario)
+    .then(
+        function (resultadoChamar_Quiz) {
+
+            res.json({
+                resultadoChamar_Quiz
+            });
+}
+    )
+}
+
+function buscarQuiz(req, res) {
+    const limite_linhas = 1;
+
+    usuarioModel.buscarQuiz(limite_linhas).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!");
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+function buscarUltimoQuiz(req, res) {
+
+    usuarioModel.buscarUltimoQuiz().then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!");
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar as ultimas medidas.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
 
 module.exports = {
     autenticar,
     cadastrar,
-    jogar_banco
+    jogar_banco,
+    SelectQuiz,
+    buscarQuiz,
+    buscarUltimoQuiz
 }

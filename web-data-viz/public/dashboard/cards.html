@@ -12,14 +12,14 @@
     <link rel="stylesheet" href="./../css/estilo.css" />
 
     <script src="../js/sessao.js"></script>
-    <script src="../js/alerta.js"></script>
+    <!-- <script src="../js/alerta.js"></script> -->
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,70
         0;1,800;1,900&display=swap" rel="stylesheet">
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://kit.fontawesome.com/9f7414eb10.js" crossorigin="anonymous"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://kit.fontawesome.com/9f7414eb10.js" crossorigin="anonymous"></script> -->
 </head>
 
 <body>
@@ -153,6 +153,9 @@
 </body>
 
 <script>
+    var certasDash = 0;
+    var erradasDash = 0;
+
     // Define o nome do usuário a partir da sessão
     const b_usuario = document.getElementById('b_usuario');
     if (sessionStorage.NOME_USUARIO) {
@@ -184,7 +187,7 @@
             perguntaAtual++;
             document.getElementById("pergunta" + perguntaAtual).style.display = "block";
         } else {
-            fala_que_te_escuto.innerHTML = `<button onclick="jogar_banco()">Finalizar</button>` //exibirResultados();
+            fala_que_te_escuto.innerHTML = `<button onclick="jogar_banco(), timeout">Finalizar</button>` //exibirResultados();
         }
     }
 
@@ -280,24 +283,54 @@
         window.location.href = '../index.html';
     }
 
-    function jogar_banco(){
+    function jogar_banco() {
         var respostasCorretasVar = respostasCorretas;
         var respostasIncorretasVar = respostasIncorretas;
         // var idUsuario = idUsuario;
-    
+
 
         fetch("/usuarios/jogar_banco", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        },
-      body: JSON.stringify({
-        respostasCorretasServer: respostasCorretasVar,
-        respostasIncorretasServer: respostasIncorretasVar,
-        idUsuarioServer: sessionStorage.ID_USUARIO,
-      }),
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                respostasCorretasServer: respostasCorretasVar,
+                respostasIncorretasServer: respostasIncorretasVar,
+                idUsuarioServer: sessionStorage.ID_USUARIO,
+            }),
         })
     }
+
+    var timeout = setTimeout(function SelectQuiz() {
+        fetch("/usuarios/SelectQuiz", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                idUsuarioServer: sessionStorage.ID_USUARIO
+            })
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO entrar()!")
+            if (resposta.ok) {
+                console.log(resposta);
+
+                resposta.json().then(json => {
+                    console.log(json);
+                    console.log(JSON.stringify(json));
+                    console.log(json.resultadoChamar_Quiz[0])
+
+                    var resultado = json.resultadoChamar_Quiz[0];
+                    var certasMedicao = resultado.certas;
+                    var erradasMedicao = resultado.erradas;
+
+                    certasDash = certasMedicao;
+                    erradasDash = erradasMedicao;
+                })
+            }
+        })
+    }, 200)
 </script>
 
 </html>
