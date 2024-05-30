@@ -426,3 +426,9 @@ canvas {
   margin-bottom: 100px;
   cursor: pointer;
 }
+
+#fala_que_te_escuto {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

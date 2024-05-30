@@ -22,7 +22,7 @@ function autenticar(req, res) {
 
                         if (resultadoAutenticar.length > 0) {
                             res.json({
-                                id: resultadoAutenticar[0].idUsuario,
+                                idUsuario: resultadoAutenticar[0].idUsuario,
                                 email: resultadoAutenticar[0].email,
                                 nome: resultadoAutenticar[0].nome,
                                 // cpf: resultadoAutenticar[0].cpf,
@@ -126,7 +126,33 @@ function cadastrar(req, res) {
     }
 }
 
+function jogar_banco(req, res) {
+    // Variável que recupera os valores do cadastro.html
+    var respostasCorretas = req.body.respostasCorretasServer;
+    var respostasIncorretas = req.body.respostasIncorretasServer;
+    var idUsuario = req.body.idUsuarioServer;
+
+        // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
+        usuarioModel.jogar_banco(respostasCorretas, respostasIncorretas, idUsuario)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao realizar o cadastro! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+}
+
+
 module.exports = {
     autenticar,
-    cadastrar
+    cadastrar,
+    jogar_banco
 }
