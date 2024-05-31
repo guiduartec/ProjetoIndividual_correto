@@ -147,19 +147,19 @@ function SelectQuiz(req,res){
     )
 }
 
-function SelectQuiz(req,res){
-    var idUsuario = req.body.idUsuarioServer
+// function SelectQuiz(req,res){
+//     var idUsuario = req.body.idUsuarioServer
 
-    usuarioModel.SelectQuiz(idUsuario)
-    .then(
-        function (resultadoChamar_Quiz) {
+//     usuarioModel.SelectQuiz(idUsuario)
+//     .then(
+//         function (resultadoChamar_Quiz) {
 
-            res.json({
-                resultadoChamar_Quiz
-            });
-}
-    )
-}
+//             res.json({
+//                 resultadoChamar_Quiz
+//             });
+// }
+//     )
+// }
 
 function buscarQuiz(req, res) {
     const limite_linhas = 1;

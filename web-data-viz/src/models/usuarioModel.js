@@ -35,7 +35,7 @@ function jogar_banco(respostasCorretas, respostasIncorretas, idUsuario) {
 }
 
 function SelectQuiz(idUsuario) {
-    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ", idUsuario)
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function SelectQuiz(): ", idUsuario)
     var instrucaoSql = `
         SELECT certas, erradas FROM quiz WHERE idQuiz = (SELECT max(idQuiz) FROM quiz WHERE fkUsuario = '${idUsuario}' ) GROUP BY idQuiz;
     `;
@@ -44,7 +44,7 @@ function SelectQuiz(idUsuario) {
 }
 
 function buscarQuiz(idUsuario) {
-    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ", idUsuario)
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function buscarQuiz(): ", idUsuario)
     var instrucaoSql = `
         SELECT certas, erradas FROM quiz WHERE idQuiz = (SELECT max(idQuiz) FROM quiz WHERE fkUsuario = '${idUsuario}' ) GROUP BY idQuiz;
     `;
@@ -53,7 +53,7 @@ function buscarQuiz(idUsuario) {
 }
 
 function buscarUltimoQuiz(idUsuario) {
-    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ", idUsuario)
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function buscarUltimoQuiz(): ", idUsuario)
     var instrucaoSql = `
         SELECT certas, erradas FROM quiz WHERE idQuiz = (SELECT max(idQuiz) FROM quiz WHERE fkUsuario = '${idUsuario}' ) GROUP BY idQuiz;
     `;
