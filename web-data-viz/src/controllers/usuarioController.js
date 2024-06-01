@@ -158,7 +158,7 @@ function SelectQuiz(req,res){
 //                 resultadoChamar_Quiz
 //             });
 // }
-//     )
+//     ) 
 // }
 
 function buscarQuiz(req, res) {

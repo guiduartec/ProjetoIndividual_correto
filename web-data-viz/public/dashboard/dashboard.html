@@ -2,13 +2,12 @@
 <html lang="pt-br">
 
 <head>
-    <link rel="shortcut icon" href="../assets/icon/favicon2.ico" type="image/x-icon">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboards</title>
+    <title>Dashboards | On-Beach</title>
 
-
+    <link rel="shortcut icon" type="imagex/png" href="css/img/on_beach.png">
     <link rel="stylesheet" href="./../css/dashboards.css">
     <link rel="stylesheet" href="./../css/estilo.css" />
     <script src="../js/sessao.js"></script>
@@ -30,50 +29,50 @@
 
 <body>
 
-    <div class="janela">
-        <div class="header-left">
-            <h1>Praias Paradisíacas BR</h1>
 
-            <div class="hello">
-                <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
-            </div>
+    <div class="header-left dash-header">
+        <img src="./../css/img/on_beach.png" alt="">
 
-            <div class="btn-nav-white">
-                <a href="./cards.html">
-                    <h3>Aquários</h3>
-                </a>
-            </div>
+        <h1>Quiz-Praias</h1>
 
-            <div class="btn-nav">
+        <div class="hello">
+            <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
+        </div>
 
-                <h3>Gráficos</h3>
+        <div class="btn-nav-white">
+            <a href="./cards.html">
+                <h3>Quiz</h3>
+            </a>
+        </div>
 
-            </div>
+        <div class="btn-nav">
 
-            <!-- <div class="btn-nav-white">
+            <h3>Gráficos</h3>
+
+        </div>
+
+        <!-- <div class="btn-nav-white">
                 <a href="./mural.html">
                     <h3>Mural de Avisos</h3>
                 </a>
             </div> -->
 
-            <div class="btn-logout" onclick="limparSessao()">
-                <h3>Sair</h3>
-            </div>
-
+        <div class="btn-logout" onclick="limparSessao()">
+            <h3>Sair</h3>
         </div>
 
-        <div class="dash">
-            <div id="alerta">
-            </div>
-
-            <div class="btns-dash" id="btnQuiz"> <!--COMECEI A ALTERAR DAQUI!-->
-                <!-- O gráfico é chamado de acordo com o id (fk_aquario) do banco  -->
-            </div>
-            <div id="graficos">
-            </div>
-        </div>
     </div>
 
+    <div class="dash">
+
+        <div class="leo_abacate" id="graficos">
+        </div>
+
+
+        <div class="btns-dash" id="btnQuiz"> <!--COMECEI A ALTERAR DAQUI!-->
+            <!-- O gráfico é chamado de acordo com o id (fk_aquario) do banco  -->
+        </div>
+    </div>
 
 </body>
 
@@ -90,20 +89,20 @@
         document.getElementById("graficos").innerHTML += `
         <div id="grafico">
             <h3 class="tituloGraficos">
-                <span id="tituloGrafico">Nossa Comunidade</span>
+                <span id="tituloGrafico">Seu resultado praiano</span>
             </h3>
             <div class="graph">
                 <canvas id="myChartCanvas"></canvas>
             </div>
             <div class="label-captura">
-                <p id="avisoCaptura" style="color: white">Teste</p>
+                <p id="avisoCaptura" style="color: white">Gráficos</p>
             </div>
         </div>
     `;
 
         obterDadosGrafico();
     }
-
+ 
     function obterDadosGrafico() {
         if (proximaAtualizacao != undefined) {
             clearTimeout(proximaAtualizacao);
@@ -124,45 +123,105 @@
             });
     }
 
+    // function plotarGrafico(resposta) {
+    //     console.log('Iniciando plotagem do gráfico...');
+
+    //     let labels = ["Certas                                            |                                           Erradas"];
+
+    //     let dados = {
+    //         labels: labels,
+    //         datasets: [{
+    //             label: 'Certas',
+    //             data: [resposta[0].certas],
+    //             backgroundColor: 'blue',
+    //             borderColor: 'blue',
+    //             borderWidth: 1
+    //         },
+    //         {
+    //             label: 'Erradas',
+    //             data: [resposta[0].erradas],
+    //             backgroundColor: 'red',
+    //             borderColor: 'red',
+    //             borderWidth: 1
+    //         }]
+    //     };
+
+    //     // , resposta[0].erradas
+
+    //     // Configuração do gráfico
+    //     const config = {
+    //         type: 'bar',
+    //         data: dados,
+    //     };
+
+    //     // Adicionando gráfico criado em div na tela
+    //     let myChart = new Chart(
+    //         document.getElementById(`myChartCanvas`),
+    //         config
+    //     );
+
+    // }
+
     function plotarGrafico(resposta) {
-        console.log('Iniciando plotagem do gráfico...');
+    console.log('Iniciando plotagem do gráfico...');
 
-        let labels = ["Results in english"];
+    let labels = ["Certas                                            |                                           Erradas"];
 
-        let dados = {
-            labels: labels,
-            datasets: [{
-                label: 'Certas',
-                data: [resposta[0].certas],
-                backgroundColor: 'blue',
-                borderColor: 'blue',
-                borderWidth: 1
+    let dados = {
+        labels: labels,
+        datasets: [{
+            label: 'Certas',
+            data: [resposta[0].certas],
+            backgroundColor: 'blue',
+            borderColor: 'blue',
+            borderWidth: 1
+        },
+        {
+            label: 'Erradas',
+            data: [resposta[0].erradas],
+            backgroundColor: 'red',
+            borderColor: 'red',
+            borderWidth: 1
+        }]
+    };
+
+    // Configuração do gráfico
+    const config = {
+        type: 'bar',
+        data: dados,
+        options: {
+            plugins: {
+                legend: {
+                    labels: {
+                        color: 'white' // Cor das legendas
+                    }
+                }
             },
-            {
-                label: 'Erradas',
-                data: [resposta[0].erradas],
-                backgroundColor: 'red',
-                borderColor: 'red',
-                borderWidth: 1
-            }]
-        };
+            scales: {
+                x: {
+                    ticks: {
+                        color: 'white' // Cor dos rótulos do eixo X
+                    }
+                },
+                y: {
+                    ticks: {
+                        color: 'white' // Cor dos rótulos do eixo Y
+                    }
+                }
+            }
+        }
+    };
 
-        // , resposta[0].erradas
+    // Adicionando gráfico criado em div na tela
+    let myChart = new Chart(
+        document.getElementById(`myChartCanvas`),
+        config
+    );
+}
 
-        // Configuração do gráfico
-        const config = {
-            type: 'bar',
-            data: dados,
-        };
 
-        // Adicionando gráfico criado em div na tela
-        let myChart = new Chart(
-            document.getElementById(`myChartCanvas`),
-            config
-        );
 
-    }
-        // setTimeout(() => atualizarGrafico(dados, myChart), 2000);
+    // setTimeout(() => atualizarGrafico(dados, myChart), 2000);
     // function atualizarGrafico(dados, myChart) {
     //     fetch(`/usuarios/buscarUltimoQuiz/`, { cache: 'no-store' }).then(function (response) {
     //         if (response.ok) {

@@ -2,17 +2,17 @@
 <html lang="pt-br">
 
 <head>
-    <link rel="shortcut icon" href="../assets/icon/favicon2.ico" type="image/x-icon">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz</title>
+    <title>Quiz | On-Beach</title>
+    
+    <link rel="shortcut icon" type="imagex/png" href="css/img/on_beach.png">
 
     <link rel="stylesheet" href="./../css/dashboards.css">
     <link rel="stylesheet" href="./../css/estilo.css" />
 
     <script src="../js/sessao.js"></script>
-    <!-- <script src="../js/alerta.js"></script> -->
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,70
@@ -27,8 +27,8 @@
     <div class="janela">
 
         <div class="header-left dash-header">
-
-            <h1>Praias</h1>
+            <img src="./../css/img/on_beach.png" alt="">
+            <h1>On-Beach</h1>
 
             <div class="hello">
                 <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
@@ -58,7 +58,7 @@
 
         <div class="dash">
             <div id="quizContainer">
-                <div id="inicarQuiz">
+                <div class="iniciarQuiz" id="inicarQuiz">
                     <h1>Quiz Praias</h1>
                     <p>Bora testar seus conhecimentos?</p>
                     <button onclick="iniciar()">Jogar</button>
@@ -135,6 +135,7 @@
                         <button onclick="responder(this, 'Camboinha')">Pipa</button>
                         <button onclick="responder(this, 'Camboinha')">Fernando de Noronha</button>
                     </div>
+                    <div id="fala_que_te_escuto"></div>
                 </div>
                 <div id="resultados" style="display: none;">
                     <h2>Resultados do Quiz</h2>
@@ -149,7 +150,6 @@
             </div>
         </div>
     </div>
-    <div id="fala_que_te_escuto"></div>
 </body>
 
 <script>
@@ -169,7 +169,7 @@
 
     function iniciar() {
         document.getElementById('inicarQuiz').style.display = 'none';
-        document.getElementById('quiz').style.display = 'block';
+        document.getElementById('quiz').style.display = 'flex';
     }
 
     var perguntaAtual = 1;
@@ -187,7 +187,7 @@
             perguntaAtual++;
             document.getElementById("pergunta" + perguntaAtual).style.display = "block";
         } else {
-            fala_que_te_escuto.innerHTML = `<button onclick="jogar_banco(), timeout">Finalizar</button>` //exibirResultados();
+            fala_que_te_escuto.innerHTML = `<button onclick="jogar_banco(),     out">Finalizar</button>` //exibirResultados();
         }
     }
 
@@ -300,6 +300,7 @@
                 idUsuarioServer: sessionStorage.ID_USUARIO,
             }),
         })
+        window.location.href = './dashboard.html'
     }
 
     var timeout = setTimeout(function SelectQuiz() {
@@ -322,7 +323,7 @@
                     console.log(json.resultadoChamar_Quiz[0])
 
                     var resultado = json.resultadoChamar_Quiz[0];
-                    
+
                     var certasMedicao = resultado.certas;
                     var erradasMedicao = resultado.erradas;
 
