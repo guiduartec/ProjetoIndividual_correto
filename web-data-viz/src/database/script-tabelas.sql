@@ -9,7 +9,7 @@ comandos para mysql server
 CREATE DATABASE ProjetoIndividual;
 
 USE ProjetoIndividual;
-
+ 
 CREATE TABLE usuario(
 idUsuario INT PRIMARY KEY AUTO_INCREMENT,
 nome VARCHAR(100),
