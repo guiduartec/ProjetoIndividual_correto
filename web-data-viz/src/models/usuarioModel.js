@@ -28,7 +28,7 @@ function jogar_banco(respostasCorretas, respostasIncorretas, idUsuario) {
     // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
     //  e na ordem de inserção dos dados.
     var instrucaoSql = `
-        INSERT INTO quiz (certas, erradas, fkUsuario) VALUES ('${respostasCorretas}', '${respostasIncorretas}', '${idUsuario}');
+        INSERT INTO quiz (certas, erradas, fkUsuario) VALUES (${respostasCorretas}, ${respostasIncorretas}, ${idUsuario});
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -37,7 +37,7 @@ function jogar_banco(respostasCorretas, respostasIncorretas, idUsuario) {
 function SelectQuiz(idUsuario) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function SelectQuiz(): ", idUsuario)
     var instrucaoSql = `
-        SELECT certas, erradas FROM quiz WHERE idQuiz = (SELECT max(idQuiz) FROM quiz WHERE fkUsuario = '${idUsuario}' ) GROUP BY idQuiz;
+        SELECT certas, erradas FROM quiz WHERE idQuiz = (SELECT max(idQuiz) FROM quiz WHERE fkUsuario = ${idUsuario} ) GROUP BY idQuiz;
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -46,7 +46,7 @@ function SelectQuiz(idUsuario) {
 function buscarQuiz(idUsuario) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function buscarQuiz(): ", idUsuario)
     var instrucaoSql = `
-        SELECT certas, erradas FROM quiz WHERE idQuiz = (SELECT max(idQuiz) FROM quiz WHERE fkUsuario = '${idUsuario}' ) GROUP BY idQuiz;
+        SELECT certas, erradas FROM quiz WHERE idQuiz = (SELECT max(idQuiz) FROM quiz WHERE fkUsuario = ${idUsuario} ) GROUP BY idQuiz;
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -55,7 +55,7 @@ function buscarQuiz(idUsuario) {
 function buscarUltimoQuiz(idUsuario) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function buscarUltimoQuiz(): ", idUsuario)
     var instrucaoSql = `
-        SELECT certas, erradas FROM quiz WHERE idQuiz = (SELECT max(idQuiz) FROM quiz WHERE fkUsuario = '${idUsuario}' ) GROUP BY idQuiz;
+        SELECT certas, erradas FROM quiz WHERE idQuiz = (SELECT max(idQuiz) FROM quiz WHERE fkUsuario = ${idUsuario} ) GROUP BY idQuiz;
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);

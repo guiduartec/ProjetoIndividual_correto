@@ -8,7 +8,6 @@
     <title>Dashboards | On-Beach</title>
 
     <link rel="shortcut icon" type="imagex/png" href="on_beach.png">
-
     <link rel="stylesheet" href="./../css/dashboards.css">
     <link rel="stylesheet" href="./../css/estilo.css" />
     <script src="../js/sessao.js"></script>
@@ -29,8 +28,6 @@
 <!-- <body onload=" atualizarFeed()"> -->
 
 <body>
-
-
     <div class="header-left dash-header">
         <img src="./../css/img/on_beach.png" alt="">
 
@@ -103,13 +100,21 @@
 
         obterDadosGrafico();
     }
- 
+
     function obterDadosGrafico() {
         if (proximaAtualizacao != undefined) {
             clearTimeout(proximaAtualizacao);
         }
 
-        fetch(`/usuarios/buscarQuiz/`, { cache: 'no-store' }).then(function (response) {
+        fetch(`/usuarios/buscarQuiz/`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                idUsuarioServer: sessionStorage.ID_USUARIO
+            })  
+        }).then(function (response) {
             if (response.ok) {
                 response.json().then(function (resposta) {
                     console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
@@ -164,61 +169,61 @@
     // }
 
     function plotarGrafico(resposta) {
-    console.log('Iniciando plotagem do gráfico...');
+        console.log('Iniciando plotagem do gráfico...');
 
-    let labels = ["Certas                                            |                                           Erradas"];
+        let labels = ["Certas                                            |                                           Erradas"];
 
-    let dados = {
-        labels: labels,
-        datasets: [{
-            label: 'Certas',
-            data: [resposta[0].certas],
-            backgroundColor: 'blue',
-            borderColor: 'blue',
-            borderWidth: 1
-        },
-        {
-            label: 'Erradas',
-            data: [resposta[0].erradas],
-            backgroundColor: 'red',
-            borderColor: 'red',
-            borderWidth: 1
-        }]
-    };
-
-    // Configuração do gráfico
-    const config = {
-        type: 'bar',
-        data: dados,
-        options: {
-            plugins: {
-                legend: {
-                    labels: {
-                        color: 'white' // Cor das legendas
-                    }
-                }
+        let dados = {
+            labels: labels,
+            datasets: [{
+                label: 'Certas',
+                data: [resposta[0].certas],
+                backgroundColor: 'blue',
+                borderColor: 'blue',
+                borderWidth: 1
             },
-            scales: {
-                x: {
-                    ticks: {
-                        color: 'white' // Cor dos rótulos do eixo X
+            {
+                label: 'Erradas',
+                data: [resposta[0].erradas],
+                backgroundColor: 'red',
+                borderColor: 'red',
+                borderWidth: 1
+            }]
+        };
+
+        // Configuração do gráfico
+        const config = {
+            type: 'bar',
+            data: dados,
+            options: {
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: 'white' // Cor das legendas
+                        }
                     }
                 },
-                y: {
-                    ticks: {
-                        color: 'white' // Cor dos rótulos do eixo Y
+                scales: {
+                    x: {
+                        ticks: {
+                            color: 'white' // Cor dos rótulos do eixo X
+                        }
+                    },
+                    y: {
+                        ticks: {
+                            color: 'white' // Cor dos rótulos do eixo Y
+                        }
                     }
                 }
             }
-        }
-    };
+        };  
 
-    // Adicionando gráfico criado em div na tela
-    let myChart = new Chart(
-        document.getElementById(`myChartCanvas`),
-        config
-    );
-}
+        // Adicionando gráfico criado em div na tela
+        let myChart = new Chart(
+            document.getElementById(`myChartCanvas`),
+            config
+        );
+    }
 
 
 

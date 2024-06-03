@@ -163,10 +163,9 @@ function SelectQuiz(req,res){
 
 function buscarQuiz(req, res) {
     var idUsuario = req.body.idUsuarioServer;
-
     const limite_linhas = 1;
 
-    usuarioModel.buscarQuiz(limite_linhas, idUsuario).then(function (resultado) {
+    usuarioModel.buscarQuiz(idUsuario).then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {
@@ -181,7 +180,6 @@ function buscarQuiz(req, res) {
 
 function buscarUltimoQuiz(req, res) {
     var idUsuario = req.body.idUsuarioServer;
-
 
     usuarioModel.buscarUltimoQuiz(idUsuario).then(function (resultado) {
         if (resultado.length > 0) {
