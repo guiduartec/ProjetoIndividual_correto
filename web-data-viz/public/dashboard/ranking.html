@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz | On-Beach</title>
+
+    <link rel="shortcut icon" type="imagex/png" href="on_beach.png">
+
+    <link rel="stylesheet" href="./../css/dashboards.css">
+    <link rel="stylesheet" href="./../css/estilo.css" />
+
+    <script src="../js/sessao.js"></script>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,70
+        0;1,800;1,900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+<!--DIA 28/06/2024
+CRIE ESSA PÁGINA, POR ENQUANTO SEM CONTEÚDO, PARA HOSPEDAR NELA O RANKING DE COMPARAÇÃO DOS USUÁRIOS COM BASE NAS 
+REPOSTAS CORRETAS DOS QUIZZES REALIZADOS-->
+    <div class="janela">
+        <!-- Essa classe vai englogar os elementos da aba que tem no lado esquerdo da página, que são os mesmos abaixo -->
+
+        <div class="header-left dash-header">
+            <img src="./../css/img/on_beach.png" alt="">
+            <h1>On-Beach</h1>
+
+            <div class="hello">
+                <h3>Vamos competir? <span id="b_usuario">usuário</span></h3>
+            </div>
+
+
+            <div class="btn-nav-inicio">
+                <a href="./inicial.html">
+                    <h3>Início</h3>
+                </a>
+            </div>
+
+            <div class="btn-nav">
+                <a href="./cards.html">
+                    <h3>Quiz</h3>
+            </div>
+
+            <div class="btn-nav-white">
+                <a href="./dashboard.html">
+                    <h3>Gráficos</h3>
+                </a>
+            </div>
+
+            <div class="btn-nav-jornada">
+                <a href="./evolucao.html">
+                    <h3>Jornada</h3>
+                </a>
+            </div>
+
+            <div class="btn-nav-ranking">
+                <a href="./ranking.html">
+                    <h3>Ranking</h3>
+                </a>
+            </div>
+
+            <div class="btn-logout" onclick="limparSessao()">
+                <h3>Sair</h3>
+            </div>
+
+        </div>
+
+        <div class="dash">
+            <!--Como eu quero um site padronizado, peguei essa class "dash" da página "cards" para utilizar o mesmo front e apenas adicioeni os elementos abaixo-->
+           
+        </div>
+    </div>
+</body>
+
+<script>
+    b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
+
+</script>
+
+</html>

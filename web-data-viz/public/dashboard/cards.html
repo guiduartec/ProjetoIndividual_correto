@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz | On-Beach</title>
     
-    <link rel="shortcut icon" type="imagex/png" href="on_beach.png">
+    <link rel="shortcut icon" type="imagex/png" href="on_beach.png"> 
 
     <link rel="stylesheet" href="./../css/dashboards.css">
     <link rel="stylesheet" href="./../css/estilo.css" />
@@ -31,7 +31,14 @@
             <h1>On-Beach</h1>
 
             <div class="hello">
-                <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
+                <h3>Vamos lá, <span id="b_usuario">usuário</span>?</h3>
+            </div>
+
+            
+            <div class="btn-nav-inicio">
+                <a href="./inicial.html">
+                    <h3>Início</h3>
+                </a>
             </div>
 
             <div class="btn-nav">
@@ -44,11 +51,17 @@
                 </a>
             </div>
 
-            <!-- <div class="btn-nav-white">
-                <a href="./mural.html">
-                    <h3>Mural de Avisos</h3>
+            <div class="btn-nav-jornada">
+                <a href="./evolucao.html">
+                    <h3>Jornada</h3>
                 </a>
-            </div> -->
+            </div>
+
+            <div class="btn-nav-ranking">
+                <a href="./ranking.html">
+                    <h3>Ranking</h3>
+                </a>
+            </div>
 
             <div class="btn-logout" onclick="limparSessao()">
                 <h3>Sair</h3>
@@ -202,15 +215,15 @@
     //         document.getElementById("acimaOuAbaixo").textContent = "abaixo";
     //     }
 
-    //     var desempenho = '';
+    //     var jornada = '';
     //     if (media >= 80) {
-    //         desempenho = 'Bom';
+    //         jornada = 'Bom';
     //     } else if (media >= 50) {
-    //         desempenho = 'Médio';
+    //         jornada = 'Médio';
     //     } else {
-    //         desempenho = 'Ruim';
+    //         jornada = 'Ruim';
     //     }
-    //     document.getElementById("desempenho").textContent = desempenho;
+    //     document.getElementById("jornada").textContent = jornada;
 
     //     fetch('/medidas/salvar-resultados', {
     //         method: 'POST',

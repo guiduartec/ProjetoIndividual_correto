@@ -34,7 +34,13 @@
         <h1>Quiz-Praias</h1>
 
         <div class="hello">
-            <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
+            <h3>Olhe só, <span id="b_usuario">usuário</span>:</h3>
+        </div>
+
+        <div class="btn-nav-inicio">
+            <a href="./inicial.html">
+                <h3>Início</h3>
+            </a>
         </div>
 
         <div class="btn-nav-white">
@@ -49,11 +55,17 @@
 
         </div>
 
-        <!-- <div class="btn-nav-white">
-                <a href="./mural.html">
-                    <h3>Mural de Avisos</h3>
-                </a>
-            </div> -->
+        <div class="btn-nav-jornada">
+            <a href="./evolucao.html">
+                <h3>Jornada</h3>
+            </a>
+        </div>
+
+        <div class="btn-nav-ranking">
+            <a href="./ranking.html">
+                <h3>Ranking</h3>
+            </a>
+        </div>
 
         <div class="btn-logout" onclick="limparSessao()">
             <h3>Sair</h3>
@@ -199,16 +211,16 @@
 
         //Aqui estão as validações para saber se o usuário ficou abaixo, perto ou acima da média com base em suas respostas
         if (porcentagemCertas < mediaGeral) {
-        //Atualizando a mensagem com a porcentagem
+            //Atualizando a mensagem com a porcentagem
             document.getElementById("mensagemPorcentagem").innerHTML = `<h2>Você acertou <span style="color: red;">${porcentagemCertas}%</span> das perguntas, portanto você ficou <span style="color: red;">abaixo da média</span>, refaça o quiz.</h2>`;
-        } else if (porcentagemCertas == mediaGeral){
-        //Atualizando a mensagem com a porcentagem
+        } else if (porcentagemCertas == mediaGeral) {
+            //Atualizando a mensagem com a porcentagem
             document.getElementById("mensagemPorcentagem").innerHTML = `<h2>Você acertou <span style="color: rgb(255, 234, 0);">${porcentagemCertas}%</span> das perguntas e ficou em cima da média, portanto <span style="color: rgb(255, 234, 0);">cuidado</span>!</h2>`;
-        } else if (porcentagemCertas == 70){
-        //Atualizando a mensagem com a porcentagem
+        } else if (porcentagemCertas == 70) {
+            //Atualizando a mensagem com a porcentagem
             document.getElementById("mensagemPorcentagem").innerHTML = `<h2>Você acertou <span style="color: rgb(255, 234, 0);">${porcentagemCertas}%</span> das perguntas. <span style="color: rgb(255, 234, 0);">Pode melhorar</span>!.</h2>`;
         } else {
-        //Atualizando a mensagem com a porcentagem
+            //Atualizando a mensagem com a porcentagem
             document.getElementById("mensagemPorcentagem").innerHTML = `<h1>Parabéns! Você acertou: <span style="color: blue;">${porcentagemCertas}%</span> das perguntas. E ficou <span style="color: blue;">acima</span> da média!</h1>`
         }
     }
