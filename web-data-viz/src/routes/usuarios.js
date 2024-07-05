@@ -28,4 +28,24 @@ router.post("/buscarUltimoQuiz", function (req, res) {
     usuarioController.buscarUltimoQuiz(req, res);
 });
 
+
+// router.post("/play_banco", function (req, res) {
+//     usuarioController.play_banco(req, res);
+// });
+
+// router.post("/SelectFiveQuiz", function (req, res) {
+//     usuarioController.SelectFiveQuiz(req, res);
+// });
+
+
+//Aqui eu faço a criação da rota para puxar os dados do banco e permitir a plotagem
+router.get("/buscar5Quiz/:idUsuarioServer", function (req, res) {
+    usuarioController.buscar5Quiz(req, res);
+});
+
+//Aqui eu faço a atualização da busca anterior e pego sempre o último quiz atualizado
+router.get("/buscarUltimos5Quiz", function (req, res) {
+    usuarioController.buscarUltimos5Quiz(req, res);
+});
+
 module.exports = router;

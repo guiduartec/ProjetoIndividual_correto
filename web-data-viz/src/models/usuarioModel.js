@@ -61,11 +61,50 @@ function buscarUltimoQuiz(idUsuario) {
     return database.executar(instrucaoSql);
 }
 
+
+
+// Função que busca os últimos 5 quizzes de um usuário com base no ID
+function buscar5Quiz(idUsuario) {
+    // Imprime uma mensagem no console indicando que a função foi acessada
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function buscarQuiz(): ", idUsuario);
+
+    // Define a instrução SQL para buscar as últimas 5 tentativas de quiz do usuário, ordenadas por ID em ordem decrescente
+    var instrucaoSql = `
+        SELECT certas, idQuiz FROM quiz WHERE fkUsuario = ${idUsuario} ORDER BY idQuiz DESC LIMIT 5;
+    `;
+
+    // Imprime a instrução SQL que será executada
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+
+    // Executa a instrução SQL no banco de dados e retorna o resultado
+    return database.executar(instrucaoSql);
+}
+
+// Função que busca os últimos 5 quizzes de um usuário com base no ID (similar à função anterior) mas atualiza a busca
+function buscarUltimos5Quiz(idUsuario) {
+    // Imprime uma mensagem no console indicando que a função foi acessada
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function buscarUltimoQuiz(): ", idUsuario);
+
+    // Define a instrução SQL para buscar as últimas 5 tentativas de quiz do usuário, ordenadas por ID em ordem decrescente
+    var instrucaoSql = `
+        SELECT certas, idQuiz FROM quiz WHERE fkUsuario = ${idUsuario} ORDER BY idQuiz DESC LIMIT 5;
+    `;
+
+    // Imprime a instrução SQL que será executada
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+
+    // Executa a instrução SQL no banco de dados e retorna o resultado
+    return database.executar(instrucaoSql);
+}
+
+
 module.exports = {
     autenticar,
     cadastrar,
     jogar_banco,
     SelectQuiz,
     buscarQuiz,
-    buscarUltimoQuiz
+    buscarUltimoQuiz,
+    buscar5Quiz,
+    buscarUltimos5Quiz
 };

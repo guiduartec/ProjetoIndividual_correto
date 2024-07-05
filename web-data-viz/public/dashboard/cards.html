@@ -336,6 +336,55 @@
             }
         })
     }, 200)
+
+    // function play_banco() {
+    //     var respostasCorretasVar = respostasCorretas;
+    //     var respostasIncorretasVar = respostasIncorretas;
+
+    //     fetch("/usuarios/play_banco", {
+    //         method: "POST",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //         },
+    //         body: JSON.stringify({
+    //             respostasCorretasServer: respostasCorretasVar,
+    //             respostasIncorretasServer: respostasIncorretasVar,
+    //             idUsuarioServer: sessionStorage.ID_USUARIO,
+    //         }),
+    //     })
+    //     window.location.href = './evolucao.html'
+    // }
+
+    // var timeout = setTimeout(function SelectFiveQuiz() {
+    //     fetch("/usuarios/SelectFiveQuiz", {
+    //         method: "POST",
+    //         headers: {
+    //             "Content-Type": "application/json"
+    //         },
+    //         body: JSON.stringify({
+    //             idUsuarioServer: sessionStorage.ID_USUARIO
+    //         })
+    //     }).then(function (resposta) {
+    //         console.log("ESTOU NO THEN DO entrar()!")
+    //         if (resposta.ok) {
+    //             console.log(resposta);
+
+    //             resposta.json().then(json => {
+    //                 console.log(json);
+    //                 console.log(JSON.stringify(json));
+    //                 console.log(json.resultadoChamar5_Quiz[0])
+
+    //                 var resultado = json.resultadoChamar5_Quiz[0];
+
+    //                 var certasMedicao = resultado.certas;
+    //                 var erradasMedicao = resultado.erradas;
+
+    //                 certasDash = certasMedicao;
+    //                 erradasDash = erradasMedicao;
+    //             })
+    //         }
+    //     })
+    // }, 200)
 </script>
 
 </html>

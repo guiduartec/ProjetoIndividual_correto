@@ -147,20 +147,6 @@ function SelectQuiz(req,res){
     )
 }
 
-// function SelectQuiz(req,res){
-//     var idUsuario = req.body.idUsuarioServer
-
-//     usuarioModel.SelectQuiz(idUsuario)
-//     .then(
-//         function (resultadoChamar_Quiz) {
-
-//             res.json({
-//                 resultadoChamar_Quiz
-//             });
-// }
-//     ) 
-// }
-
 function buscarQuiz(req, res) {
     var idUsuario = req.body.idUsuarioServer;
     const limite_linhas = 1;
@@ -194,11 +180,104 @@ function buscarUltimoQuiz(req, res) {
     });
 }
 
+
+// function play_banco(req, res) {
+//     var respostasCorretas = req.body.respostasCorretasServer;
+//     var respostasIncorretas = req.body.respostasIncorretasServer;
+//     var idUsuario = req.body.idUsuarioServer;
+
+//         usuarioModel.play_banco(respostasCorretas, respostasIncorretas, idUsuario)
+//             .then(
+//                 function (resultado) {
+//                     res.json(resultado);
+//                 }
+//             ).catch(
+//                 function (erro) {
+//                     console.log(erro);
+//                     console.log(
+//                         "\nHouve um erro ao realizar o cadastro! Erro: ",
+//                         erro.sqlMessage
+//                     );
+//                     res.status(500).json(erro.sqlMessage);
+//                 }
+//             );
+// }
+
+// function SelectFiveQuiz(req,res){
+//     var idUsuario = req.body.idUsuarioServer
+
+//     usuarioModel.SelectFiveQuiz(idUsuario)
+//     .then(
+//         function (resultadoChamar5_Quiz) {
+
+//             res.json({
+//                 resultadoChamar5_Quiz
+//             });
+// }
+//     )
+// }
+
+
+// Função que busca os dados dos últimos 5 quizzes de um usuário com base no ID
+function buscar5Quiz(req, res) {
+    // Obtém o ID do usuário a partir dos parâmetros da requisição
+    var idUsuario = req.params.idUsuarioServer;
+    // Define um limite de linhas (não utilizado no código atual)
+    const limite_linhas = 1;
+
+    // Chama o método 'buscar5Quiz' do modelo 'usuarioModel' passando o ID do usuário
+    usuarioModel.buscar5Quiz(idUsuario).then(function (resultado) {
+        // Verifica se o resultado contém dados
+        if (resultado.length > 0) {
+            // Retorna os dados com status 200 (OK)
+            res.status(200).json(resultado);
+        } else {
+            // Retorna status 204 (No Content) se não houver dados
+            res.status(204).send("Nenhum resultado encontrado!");
+        }
+    }).catch(function (erro) {
+        // Em caso de erro na requisição, imprime o erro no console
+        console.log(erro);
+        // Imprime uma mensagem de erro específica do SQL no console
+        console.log("Houve um erro ao buscar.", erro.sqlMessage);
+        // Retorna status 500 (Internal Server Error) com a mensagem de erro do SQL
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+// Função que busca os dados dos últimos 5 quizzes de um usuário com base no ID
+function buscarUltimos5Quiz(req, res) {
+    // Obtém o ID do usuário a partir do corpo da requisição
+    var idUsuario = req.body.idUsuarioServer;
+
+    // Chama o método 'buscarUltimos5Quiz' do modelo 'usuarioModel' passando o ID do usuário
+    usuarioModel.buscarUltimos5Quiz(idUsuario).then(function (resultado) {
+        // Verifica se o resultado contém dados
+        if (resultado.length > 0) {
+            // Retorna os dados com status 200 (OK)
+            res.status(200).json(resultado);
+        } else {
+            // Retorna status 204 (No Content) se não houver dados
+            res.status(204).send("Nenhum resultado encontrado!");
+        }
+    }).catch(function (erro) {
+        // Em caso de erro na requisição, imprime o erro no console
+        console.log(erro);
+        // Imprime uma mensagem de erro específica do SQL no console
+        console.log("Houve um erro ao buscar as ultimas medidas.", erro.sqlMessage);
+        // Retorna status 500 (Internal Server Error) com a mensagem de erro do SQL
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+
 module.exports = {
     autenticar,
     cadastrar,
     jogar_banco,
     SelectQuiz,
     buscarQuiz,
-    buscarUltimoQuiz
+    buscarUltimoQuiz,
+    buscar5Quiz,
+    buscarUltimos5Quiz
 }

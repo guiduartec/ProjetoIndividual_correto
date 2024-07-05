@@ -14,6 +14,10 @@
 
     <script src="../js/sessao.js"></script>
 
+     <!-- scripts do Chart.js - 2022-1 -->
+     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,70
         0;1,800;1,900&display=swap" rel="stylesheet">
@@ -24,8 +28,8 @@
 
 <body>
 <!--DIA 28/06/2024
-CRIEI ESSA PÁGINA, POR ENQUANTO ESTÁTICA PARA DEMONSTRAR AO USUÁRIO A SUA JORNADA. AQUI ELE VERÁ SEU DESEMPENHO EM FORMA DE GRÁFICO COM BASE NOS ÚLTIMOS 5 QUIZZES QUE ELE RESPONDEU-->
-    <div class="janela">
+CRIEI ESSA PÁGINA PARA DEMONSTRAR AO USUÁRIO A SUA JORNADA. AQUI ELE VERÁ SEU DESEMPENHO EM FORMA DE GRÁFICO COM BASE NOS ÚLTIMOS 5 QUIZZES QUE ELE RESPONDEU-->
+    <div class="janela"> 
         <!-- Essa classe vai englogar os elementos da aba que tem no lado esquerdo da página, que são os mesmos abaixo -->
 
         <div class="header-left dash-header">
@@ -35,7 +39,6 @@ CRIEI ESSA PÁGINA, POR ENQUANTO ESTÁTICA PARA DEMONSTRAR AO USUÁRIO A SUA JOR
             <div class="hello">
                 <h3>Seu desempenho, <span id="b_usuario">usuário</span>:</h3>
             </div>
-
 
             <div class="btn-nav-inicio">
                 <a href="./inicial.html">
@@ -73,15 +76,145 @@ CRIEI ESSA PÁGINA, POR ENQUANTO ESTÁTICA PARA DEMONSTRAR AO USUÁRIO A SUA JOR
         </div>
 
         <div class="dash">
-            <!--Como eu quero um site padronizado, peguei essa class "dash" da página "cards" para utilizar o mesmo front e apenas adicioeni os elementos abaixo-->
-           
+            <!--Como eu quero um site padronizado, peguei essa class "dash" da página "cards" para utilizar o mesmo front e apenas adicionei os elementos abaixo-->
+            <div class="leo_abacate" id="graficos">
+            </div>
+    
+            <div class="btns-dash" id="btnQuiz">
+                <!-- O gráfico é chamado de acordo com o id (fk_aquario) do banco  -->
+            </div>
         </div>
     </div>
 </body>
 
 <script>
-    b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
+//Define o nome do usuário a partir da sessão
+b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
 
+let proximaAtualizacao;
+
+//Quando a página carregar, irá exibir os últimos 5 Quizzes dos usuários
+window.onload = exibir5QuizDosUsuarios();
+
+//Função que irá permitir a exibição dos últimos 5 Quizzes
+function exibir5QuizDosUsuarios() {
+
+    //Aqui eu adiciono o HTML do gráfico dentro do elemento com o id 'graficos' que foi criado no body do HTML e manipulo minha mensagem por ele
+    document.getElementById("graficos").innerHTML += `
+    <div id="grafico2">
+        <h3 class="tituloGraficos">
+            <span id="tituloGrafico">Últimas 5 tentativas</span>
+        </h3>
+        <div class="graph">
+            <canvas id="myChart"></canvas>
+        </div>
+        <div class="label-captura">
+            <p id="avisoCaptura" style="color: white">GRÁFICO</p>
+        </div>
+    </div>
+`;
+
+//Essa é uma função que será criada logo abaixo, que ira puxar os dados com a rota que farei
+    obterDadosdoGrafico();
+}
+
+//Essa é a função que tem a rota do HTML, o FETCH.  Com ela obtemos os dados do gráfico
+function obterDadosdoGrafico() {
+
+if (proximaAtualizacao != undefined) {
+    clearTimeout(proximaAtualizacao);
+}
+
+//Aqui eu declaro o ID do usuário que está cadastrado no momento da realização do quiz
+let idUsuarioServer = sessionStorage.ID_USUARIO;
+
+//Esse é o fetch, através dele eu vou fazer a manipulação dos dados, nesse caso estou puxando o ID do usuário
+//fazendo uma requisição dos dados dos últimos 5 Quizzes realizados por ele
+fetch(`/usuarios/buscar5Quiz/${idUsuarioServer}`,{cache: 'no-store'}).then(function (response) {
+    if (response.ok) {
+        response.json().then(function (resposta) {
+            //Exibe uma mensagem no terminal relatando que os dados foram recebidos
+            console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+            resposta.reverse();
+
+            plotarGrafico(resposta);//Aqui a função para plotar o gráfico com os dados recebidos do banco pelo FETCH é chamada
+        });
+    } else {
+        console.error('Erro na requisição')
+        //Caso tenha dado algum erro que não permitiu a requisição dos dados, essa mensagem será exibida no terminal
+    }
+})
+    .catch(function (error) {
+        console.error(`Erro na requisição dos dados para o grafico: ${error.message}`);
+        //Caso tenha dado algum erro que não permitiu a requisição dos dados, essa mensagem será exibida no terminal
+    });
+}
+
+//Função que plota o gráfico com os dados obtidos
+function plotarGrafico(resposta) {
+        console.log('Começando plotagem dos graficos');
+
+        //Essa LET irá listar a ordem de tentivas, número de respostas corretas e os títulos do gráfico
+        let labels = [];
+
+        //Objeto que contém os dados do gráficos
+        let dados = {
+            labels: labels,
+            datasets: [{
+                label: 'Sua Jornada Até Aqui',
+                data: [],
+                fill: false,
+                borderColor: '#7c9cff',
+                tension: 0.1,
+            }]
+        };
+
+        console.log('------------');
+        console.log(resposta.certas);
+
+        //Essa é uma estrutura de loop, nesse for eu percorro os dados dos quizzes para sempre pegar as certas dos 5 últimos quizzes e preencher os arrays "labels[]" e "data"
+        for (i = 0; i < resposta.length; i++){
+            //Crio essa let com um nome chamativo, pois é uma let importante e não posso esquecer, assim fica mais fácil de achar. Ela armazena o índice das respostas
+            let chupeta = resposta[i];
+            //Aqui eu "Jogo" esses índices no gráfico e somo mais 1, para começar a partir do número 1 e não do 0
+            labels.push(i + 1);
+            dados.datasets[0].data.push(chupeta.certas);
+        }
+
+        // Configuração do gráfico
+        const config = {
+            type: 'line',
+            data: dados,
+            options: {
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: 'white' // Cor das legendas
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: {
+                            color: 'white' // Cor dos rótulos do eixo X
+                        }
+                    },
+                    y: {
+                        ticks: {
+                            color: 'white' // Cor dos rótulos do eixo Y
+                        }
+                    }
+                }
+            }
+        };
+
+        //Cria e exibe o Gráfico
+        let myChart = new Chart(
+            document.getElementById(`myChart`),
+            config
+        )
+
+    }
 </script>
 
 </html>
