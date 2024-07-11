@@ -89,7 +89,13 @@ CRIEI ESSA PÁGINA PARA DEMONSTRAR AO USUÁRIO A SUA JORNADA. AQUI ELE VERÁ SEU
 
 <script>
 //Define o nome do usuário a partir da sessão
-b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
+// Define o nome do usuário a partir da sessão
+const b_usuario = document.getElementById('b_usuario');
+    if (sessionStorage.NOME_USUARIO) {
+        b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
+    } else {
+        b_usuario.innerHTML = 'usuário';
+    }
 
 let proximaAtualizacao;
 

@@ -271,6 +271,25 @@ function buscarUltimos5Quiz(req, res) {
 }
 
 
+//Controller p/o Ranking 10/07/2024
+function ranking(req, res){
+    usuarioModel.ranking()
+        .then(
+            function(resultado){
+                res.json(resultado);
+            }
+        ).catch(
+            function(erro){
+                console.log(erro);
+                console.log(
+                    "\nErro ao achar as pontuações! Erro:",
+                    erro.sqlMessage
+                  );
+                  res.status(500).json(erro.sqlMessage);
+            }
+        )
+}
+
 module.exports = {
     autenticar,
     cadastrar,
@@ -279,5 +298,6 @@ module.exports = {
     buscarQuiz,
     buscarUltimoQuiz,
     buscar5Quiz,
-    buscarUltimos5Quiz
+    buscarUltimos5Quiz,
+    ranking
 }

@@ -71,15 +71,50 @@ REPOSTAS CORRETAS DOS QUIZZES REALIZADOS-->
         </div>
 
         <div class="dash">
-            <!--Como eu quero um site padronizado, peguei essa class "dash" da página "cards" para utilizar o mesmo front e apenas adicioeni os elementos abaixo-->
-           
+            <!--Como eu quero um site padronizado, peguei essa class "dash" da página "cards" para utilizar o mesmo front e apenas adicionei os elementos abaixo-->
+            
+            <!--Aqui eu crio a div que englobará o ranking-->
+           <div class="div_ranking" id="div_ranking">
+            <h1 style="color: rgb(255, 255, 255);">RANKING ON-BEACH</h1>
+           </div>
         </div>
     </div>
 </body>
 
 <script>
-    b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
+   // Define o nome do usuário a partir da sessão 10/07/2024
+   const b_usuario = document.getElementById('b_usuario');
+    if (sessionStorage.NOME_USUARIO) {
+        b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
+    } else {
+        b_usuario.innerHTML = 'usuário';
+    }
 
+    rankingDuartec()
+    //Função que irá executar o fetch para o funcionamento do ranking 10/07/2024
+    function rankingDuartec() {
+        fetch(`/usuarios/ranking`, {cache: 'no-store'}).then(function (response){
+            if (response.ok){
+                response.json().then(function (resposta){
+                    resposta.reverse();
+                    gerarForRanking(resposta);
+                });
+            } else {
+                console.error('Erro ao Executar o Ranking')
+            }
+        })
+            .catch(function (error){
+                console.error(`Erro ao Executar o Ranking ${error.message}`)
+            });
+    }
+
+    //Função de loop que ira rodar as respostas corretas dos usuários para plotagem do ranking 10/07/2024
+    function gerarForRanking(resposta){
+        for(index = 0; index < resposta.length; index++){
+            let rankingAtualizado = resposta[index];
+            div_ranking.innerHTML += ` <div class="jao"> <P> <span> ${index + 1} - </span> <b style="color: rgb(153, 44, 255);">${rankingAtualizado.nome}</b>: <span> ${rankingAtualizado.Pontuação} </span> </P></div>`
+        }
+    }
 </script>
 
 </html>

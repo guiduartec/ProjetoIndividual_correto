@@ -43,9 +43,14 @@ router.get("/buscar5Quiz/:idUsuarioServer", function (req, res) {
     usuarioController.buscar5Quiz(req, res);
 });
 
-//Aqui eu faço a atualização da busca anterior e pego sempre o último quiz atualizado
+//Aqui eu faço a atualização da busca anterior e pego sempre o último quiz atualizado 
 router.get("/buscarUltimos5Quiz", function (req, res) {
     usuarioController.buscarUltimos5Quiz(req, res);
 });
+
+//Aqui eu faço a rota do Ranking 10/07/2024
+router.get("/ranking", function(req, res){
+    usuarioController.ranking(req, res);
+})
 
 module.exports = router;

@@ -97,6 +97,33 @@ function buscarUltimos5Quiz(idUsuario) {
     return database.executar(instrucaoSql);
 }
 
+// Função para executar o select 10/07/2024
+function ranking() {
+    // Imprime uma mensagem no console indicando que a função foi acessada
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function buscarUltimoQuiz(): ");
+
+    // Define a instrução SQL para buscar a pontuação máxima de cada jogador do quiz com base nas respostas certas de cada um deles 10/07/2024
+    var instrucaoSql = `
+        SELECT 
+    usuario.nome, 
+    MAX(quiz.certas) AS 'Pontuação'
+FROM 
+    quiz
+JOIN
+    usuario ON quiz.fkUsuario = usuario.idUsuario
+GROUP BY 
+    usuario.nome
+ORDER BY 
+    Pontuação ASC;
+`;
+
+    // Imprime a instrução SQL que será executada
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+
+    // Executa a instrução SQL no banco de dados e retorna o resultado
+    return database.executar(instrucaoSql);
+}
+
 
 module.exports = {
     autenticar,
@@ -106,5 +133,6 @@ module.exports = {
     buscarQuiz,
     buscarUltimoQuiz,
     buscar5Quiz,
-    buscarUltimos5Quiz
+    buscarUltimos5Quiz,
+    ranking
 };
