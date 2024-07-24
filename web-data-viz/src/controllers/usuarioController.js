@@ -67,7 +67,6 @@ function cadastrar(req, res) {
     console.log(confirmacaoSenha)
 
 
-
     // Validações
     if (nome == undefined) {
         res.status(400).send("Seu nome está indefinido!");
@@ -287,7 +286,49 @@ function ranking(req, res){
                   );
                   res.status(500).json(erro.sqlMessage);
             }
-        )
+        )   
+}
+
+//24/07/2024 --> Controller para o armazenamento no banco
+function avaliar_banco(req, res) {
+    // Variável que recupera os valores do cadastro.html
+    var respostaSelecionada = req.body.respostaSelecionadaServer;
+    var idUsuario = req.body.idUsuarioServer;
+
+        // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
+        usuarioModel.avaliar_banco(respostaSelecionada, idUsuario)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao realizar o cadastro! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+}
+
+//24/072024 --> controller para a função do select
+function buscarAvaliacao(req, res) {
+    var idUsuario = req.body.idUsuarioServer;
+    // const limite_linhas = 1;
+
+    usuarioModel.buscarAvaliacao().then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!");
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
 }
 
 module.exports = {
@@ -299,5 +340,7 @@ module.exports = {
     buscarUltimoQuiz,
     buscar5Quiz,
     buscarUltimos5Quiz,
-    ranking
+    ranking,
+    avaliar_banco,
+    buscarAvaliacao
 }

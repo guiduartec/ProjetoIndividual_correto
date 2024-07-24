@@ -520,6 +520,17 @@ canvas {
     color: white;
 }
 
+.cara_do_momento {
+  height: fit-content;
+  margin-top: 100px;
+}
+
+#grafico2 {
+  margin: 30px;
+  background-color: rgb(79 0 119 / 34%);
+  border-radius: 20px;
+  color: white;
+}
 /* #graficos{
   display: flex;
   justify-content: center;

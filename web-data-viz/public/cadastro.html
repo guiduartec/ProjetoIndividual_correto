@@ -54,8 +54,6 @@
                          Assim que inserir vá para o script abaixo.
                      -->
           <div class="campo">
-          </div>
-          <div class="campo">
             <span>Nome:</span>
             <input id="nome_input" type="text" placeholder="Seu nome" />
           </div>
@@ -103,7 +101,7 @@
       nomeVar == "" ||
       emailVar == "" ||
       senhaVar == "" ||
-      confirmacaoSenhaVar == ""
+      confirmacaoSenhaVar == "" 
     ) {
       cardErro.style.display = "block";
       mensagem_erro.innerHTML =
@@ -142,7 +140,7 @@
       finalizarAguardar();
       return false;
     }
-   
+
     else {
       setInterval(sumirMensagem, 5000);
     }
@@ -160,7 +158,7 @@
         nomeServer: nomeVar,
         emailServer: emailVar,
         senhaServer: senhaVar,
-        confirmacaoServer: confirmacaoSenhaVar
+        confirmacaoServer: confirmacaoSenhaVar,
       })
     })
       .then(function (resposta) {
@@ -191,4 +189,6 @@
       cardErro.style.display = "none";
     }
   }
+
+
 </script>

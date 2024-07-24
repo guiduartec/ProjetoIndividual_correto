@@ -24,3 +24,13 @@ erradas INT,
 fkUsuario INT,
 foreign key (fkUsuario) references usuario(idUsuario)
 );
+
+CREATE TABLE satisfacao(
+idSatisfacao INT PRIMARY KEY AUTO_INCREMENT,
+MuitoBom CHAR(9),
+bom CHAR(3),
+mediano CHAR(7),
+ruim CHAR(4),
+fkUsuario INT,
+foreign key (fkUsuario) references usuario(idUsuario)
+);

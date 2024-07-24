@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboards | On-Beach</title>
+
+    <link rel="shortcut icon" type="imagex/png" href="on_beach.png">
+    <link rel="stylesheet" href="./../css/dashboards.css">
+    <link rel="stylesheet" href="./../css/estilo.css" />
+    <script src="../js/sessao.js"></script>
+    <!-- <script src="./../js/alerta.js"></script> -->
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+
+    <!-- scripts do Chart.js - 2022-1 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!--FONT AWESOME-->
+    <script src="https://kit.fontawesome.com/9f7414eb10.js" crossorigin="anonymous"></script>
+</head>
+
+
+<!--24/07/2024 -- Criando uma página para o cliente visualizar a avaliação geral do nosso site, logo abaixo, no body eu estruturo a forma como quero que seja inicialmente-->
+<body onload="plotarGrafico()">
+    <div class="header-left dash-header">
+        <img src="./../css/img/on_beach.png" alt="">
+
+        <h1>Quiz-Praias</h1>
+
+        <div class="hello">
+            <h3>Acompanhe as avaliações, <span id="b_usuario">usuário</span>:</h3>
+        </div>
+
+        <div class="btn-nav-inicio">
+            <a href="./inicial.html">
+                <h3>Início</h3>
+            </a>
+        </div>
+
+        <div class="btn-nav-white">
+            <a href="./cards.html">
+                <h3>Quiz</h3>
+            </a>
+        </div>
+
+        <div class="btn-nav-white">
+            <a href="./dashboard.html">
+                <h3>Gráficos</h3>
+            </a>
+        </div>
+
+        <div class="btn-nav-jornada">
+            <a href="./evolucao.html">
+                <h3>Jornada</h3>
+            </a>
+        </div>
+
+        <div class="btn-nav-ranking">
+            <a href="./ranking.html">
+                <h3>Ranking</h3>
+            </a>
+        </div>
+
+        <div class="btn-nav-ranking">
+            <a href="./pesquisa.html">
+                <h3>Pesquisa</h3>
+            </a>
+        </div>
+
+        <div class="btn-nav-ranking">
+            <a href="./satisfa.html">
+                <h3>Avaliação</h3>
+            </a>
+        </div>
+
+        <div class="btn-logout" onclick="limparSessao()">
+            <h3>Sair</h3>
+        </div>
+
+    </div>
+
+    <div class="dash">
+
+        <div class="leo_abacate" id="graficos">
+        </div>
+
+        <div class="btns-dash" id="btnQuiz">
+            <!-- O gráfico é chamado de acordo com o id (fk_aquario) do banco  -->
+        </div>
+    </div>
+
+    <div id="divgraficos"></div>
+</body>
+
+</html>
+
+<script>
+//24/07/2024 --> Inicializa dois vetores vazios que serão usados para armazenar as notas e as quantidades correspondentes.
+nota_vetor = [];
+quantidade_vetor = [];
+
+//24/07/2024 --> Define o nome do usuário a partir da sessão
+const b_usuario = document.getElementById('b_usuario');
+if (sessionStorage.NOME_USUARIO) {
+    b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
+} else {
+    b_usuario.innerHTML = 'usuário';
+}
+
+let proximaAtualizacao;
+
+window.onload = exibirAvaliacaoDosUsuarios();
+
+//24/07/2024 --> Define a função exibirAvaliacaoDosUsuarios para ser chamada quando a página for carregada e plotar a div que guarda o gráfico.
+function exibirAvaliacaoDosUsuarios() {
+    document.getElementById("graficos").innerHTML += `
+    <div id="grafico">
+        <h3 class="tituloGraficos">
+            <span id="tituloGrafico">Gráfico de Satisfação</span>
+        </h3>
+        <div class="graph">
+            <canvas id="myChartCanvas"></canvas>
+        </div>
+        <div class="label-captura">
+            <p id="avisoCaptura" style="color: white">Gráficos</p>
+        </div>
+    `;
+
+    chamar_avaliacao();
+}
+
+//24/07/2024 --> Funcão que executa o fetch com o método POST
+function chamar_avaliacao() {
+    fetch("/usuarios/buscarAvaliacao", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            idUsuarioServer: sessionStorage.ID_USUARIO
+        })
+    }).then(function (resposta) {
+        console.log("ESTOU NO THEN DO entrar()!")
+
+        if (resposta.ok) {
+            resposta.json().then(json => {
+                console.log(json);
+                for (var cont = 0; cont < json.length; cont++) {
+                    var resultado_lista = json[cont];
+                    var nota = resultado_lista.nota;
+                    var quantidade = resultado_lista.quantidade;
+
+                    nota_vetor.push(nota);
+                    quantidade_vetor.push(quantidade);
+                    // Para cada objeto no vetor JSON, extrai as propriedades 'nota' e 'quantidade', e as adiciona aos vetores nota_vetor e quantidade_vetor.
+                }
+                plotarGrafico();
+            });
+        } else {
+            throw "Houve um erro ao tentar realizar o cadastro!";
+        }
+    })
+    .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+    });
+
+    return false;
+}
+
+//24/07/2024 --> Função responsável pela plotagem do gráfico
+function plotarGrafico() {
+    console.log('Iniciando plotagem do gráfico...');
+
+    //24/07/2024 --> Obtém o contexto 2D do canvas onde o gráfico será desenhado e posteriormente plotados.
+    var grafico_canvas = document.getElementById('myChartCanvas').getContext('2d');
+
+        //24/07/2024 --> Cria um novo gráfico do tipo pizza usando o Chart.js. As labels são os valores de nota_vetor e os dados são os valores de quantidade_vetor.  As cores de fundo são definidas para cada nota do gráfico.
+    new Chart(grafico_canvas, {
+        type: 'pie',
+        data: {
+            labels: nota_vetor,
+            datasets: [{
+                data: quantidade_vetor,
+                backgroundColor: [
+                    'blue', 'red', 'gray', 'green', 'pink', 'orange'
+                ],
+            }]
+        },
+        options: {
+            plugins: {
+                legend: {
+                    labels: {
+                        color: "white",
+                    },
+                },
+            },
+        },
+    });
+}
+
+
+
+</script>

@@ -64,6 +64,18 @@ REPOSTAS CORRETAS DOS QUIZZES REALIZADOS-->
                 </a>
             </div>
 
+            <div class="btn-nav-ranking">
+                <a href="./pesquisa.html">
+                    <h3>Pesquisa</h3>
+                </a>
+            </div>
+
+            <div class="btn-nav-ranking">
+                <a href="./satisfa.html">
+                    <h3>Avaliação</h3>
+                </a>
+            </div>
+
             <div class="btn-logout" onclick="limparSessao()">
                 <h3>Sair</h3>
             </div>
@@ -72,7 +84,7 @@ REPOSTAS CORRETAS DOS QUIZZES REALIZADOS-->
 
         <div class="dash">
             <!--Como eu quero um site padronizado, peguei essa class "dash" da página "cards" para utilizar o mesmo front e apenas adicionei os elementos abaixo-->
-            
+
             <!--Aqui eu crio a div que englobará o ranking-->
            <div class="div_ranking" id="div_ranking">
             <h1 style="color: rgb(255, 255, 255);">RANKING ON-BEACH</h1>
@@ -112,7 +124,7 @@ REPOSTAS CORRETAS DOS QUIZZES REALIZADOS-->
     function gerarForRanking(resposta){
         for(index = 0; index < resposta.length; index++){
             let rankingAtualizado = resposta[index];
-            div_ranking.innerHTML += ` <div class="jao"> <P> <span> ${index + 1} - </span> <b style="color: rgb(153, 44, 255);">${rankingAtualizado.nome}</b>: <span> ${rankingAtualizado.Pontuação} </span> </P></div>`
+            div_ranking.innerHTML += ` <div class="jao"> <P> <span> ${index + 1} - </span> <b style="color: rgb(153, 44, 255);">${rankingAtualizado.nome}</b>: <span> ${rankingAtualizado.Pontuação} Pontos</span> </P></div>`
         }
     }
 </script>

@@ -14,8 +14,8 @@
 
     <script src="../js/sessao.js"></script>
 
-     <!-- scripts do Chart.js - 2022-1 -->
-     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- scripts do Chart.js - 2022-1 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -27,9 +27,9 @@
 </head>
 
 <body>
-<!--DIA 28/06/2024
+    <!--DIA 28/06/2024
 CRIEI ESSA PÁGINA PARA DEMONSTRAR AO USUÁRIO A SUA JORNADA. AQUI ELE VERÁ SEU DESEMPENHO EM FORMA DE GRÁFICO COM BASE NOS ÚLTIMOS 5 QUIZZES QUE ELE RESPONDEU-->
-    <div class="janela"> 
+    <div class="janela">
         <!-- Essa classe vai englogar os elementos da aba que tem no lado esquerdo da página, que são os mesmos abaixo -->
 
         <div class="header-left dash-header">
@@ -69,6 +69,18 @@ CRIEI ESSA PÁGINA PARA DEMONSTRAR AO USUÁRIO A SUA JORNADA. AQUI ELE VERÁ SEU
                 </a>
             </div>
 
+            <div class="btn-nav-ranking">
+                <a href="./satisfa.html">
+                    <h3>Satisfação</h3>
+                </a>
+            </div>
+
+            <div class="btn-nav-ranking">
+                <a href="./satisfa.html">
+                    <h3>Avaliação</h3>
+                </a>
+            </div>
+
             <div class="btn-logout" onclick="limparSessao()">
                 <h3>Sair</h3>
             </div>
@@ -76,10 +88,11 @@ CRIEI ESSA PÁGINA PARA DEMONSTRAR AO USUÁRIO A SUA JORNADA. AQUI ELE VERÁ SEU
         </div>
 
         <div class="dash">
-            <!--Como eu quero um site padronizado, peguei essa class "dash" da página "cards" para utilizar o mesmo front e apenas adicionei os elementos abaixo-->
-            <div class="leo_abacate" id="graficos">
+            <!--Atualizando o CSS 12/07/2024-->
+            <div class="cara_do_momento" id="graficos">
+                <div class="grafico2" id="grafico2"></div>
             </div>
-    
+
             <div class="btns-dash" id="btnQuiz">
                 <!-- O gráfico é chamado de acordo com o id (fk_aquario) do banco  -->
             </div>
@@ -88,25 +101,25 @@ CRIEI ESSA PÁGINA PARA DEMONSTRAR AO USUÁRIO A SUA JORNADA. AQUI ELE VERÁ SEU
 </body>
 
 <script>
-//Define o nome do usuário a partir da sessão
-// Define o nome do usuário a partir da sessão
-const b_usuario = document.getElementById('b_usuario');
+    //Define o nome do usuário a partir da sessão
+    // Define o nome do usuário a partir da sessão
+    const b_usuario = document.getElementById('b_usuario');
     if (sessionStorage.NOME_USUARIO) {
         b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
     } else {
         b_usuario.innerHTML = 'usuário';
     }
 
-let proximaAtualizacao;
+    let proximaAtualizacao;
 
-//Quando a página carregar, irá exibir os últimos 5 Quizzes dos usuários
-window.onload = exibir5QuizDosUsuarios();
+    //Quando a página carregar, irá exibir os últimos 5 Quizzes dos usuários
+    window.onload = exibir5QuizDosUsuarios();
 
-//Função que irá permitir a exibição dos últimos 5 Quizzes
-function exibir5QuizDosUsuarios() {
+    //Função que irá permitir a exibição dos últimos 5 Quizzes
+    function exibir5QuizDosUsuarios() {
 
-    //Aqui eu adiciono o HTML do gráfico dentro do elemento com o id 'graficos' que foi criado no body do HTML e manipulo minha mensagem por ele
-    document.getElementById("graficos").innerHTML += `
+        //Aqui eu adiciono o HTML do gráfico dentro do elemento com o id 'graficos' que foi criado no body do HTML e manipulo minha mensagem por ele
+        document.getElementById("graficos").innerHTML += `
     <div id="grafico2">
         <h3 class="tituloGraficos">
             <span id="tituloGrafico">Últimas 5 tentativas</span>
@@ -120,44 +133,44 @@ function exibir5QuizDosUsuarios() {
     </div>
 `;
 
-//Essa é uma função que será criada logo abaixo, que ira puxar os dados com a rota que farei
-    obterDadosdoGrafico();
-}
-
-//Essa é a função que tem a rota do HTML, o FETCH.  Com ela obtemos os dados do gráfico
-function obterDadosdoGrafico() {
-
-if (proximaAtualizacao != undefined) {
-    clearTimeout(proximaAtualizacao);
-}
-
-//Aqui eu declaro o ID do usuário que está cadastrado no momento da realização do quiz
-let idUsuarioServer = sessionStorage.ID_USUARIO;
-
-//Esse é o fetch, através dele eu vou fazer a manipulação dos dados, nesse caso estou puxando o ID do usuário
-//fazendo uma requisição dos dados dos últimos 5 Quizzes realizados por ele
-fetch(`/usuarios/buscar5Quiz/${idUsuarioServer}`,{cache: 'no-store'}).then(function (response) {
-    if (response.ok) {
-        response.json().then(function (resposta) {
-            //Exibe uma mensagem no terminal relatando que os dados foram recebidos
-            console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-            resposta.reverse();
-
-            plotarGrafico(resposta);//Aqui a função para plotar o gráfico com os dados recebidos do banco pelo FETCH é chamada
-        });
-    } else {
-        console.error('Erro na requisição')
-        //Caso tenha dado algum erro que não permitiu a requisição dos dados, essa mensagem será exibida no terminal
+        //Essa é uma função que será criada logo abaixo, que ira puxar os dados com a rota que farei
+        obterDadosdoGrafico();
     }
-})
-    .catch(function (error) {
-        console.error(`Erro na requisição dos dados para o grafico: ${error.message}`);
-        //Caso tenha dado algum erro que não permitiu a requisição dos dados, essa mensagem será exibida no terminal
-    });
-}
 
-//Função que plota o gráfico com os dados obtidos
-function plotarGrafico(resposta) {
+    //Essa é a função que tem a rota do HTML, o FETCH.  Com ela obtemos os dados do gráfico
+    function obterDadosdoGrafico() {
+
+        if (proximaAtualizacao != undefined) {
+            clearTimeout(proximaAtualizacao);
+        }
+
+        //Aqui eu declaro o ID do usuário que está cadastrado no momento da realização do quiz
+        let idUsuarioServer = sessionStorage.ID_USUARIO;
+
+        //Esse é o fetch, através dele eu vou fazer a manipulação dos dados, nesse caso estou puxando o ID do usuário
+        //fazendo uma requisição dos dados dos últimos 5 Quizzes realizados por ele
+        fetch(`/usuarios/buscar5Quiz/${idUsuarioServer}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    //Exibe uma mensagem no terminal relatando que os dados foram recebidos
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    resposta.reverse();
+
+                    plotarGrafico(resposta);//Aqui a função para plotar o gráfico com os dados recebidos do banco pelo FETCH é chamada
+                });
+            } else {
+                console.error('Erro na requisição')
+                //Caso tenha dado algum erro que não permitiu a requisição dos dados, essa mensagem será exibida no terminal
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na requisição dos dados para o grafico: ${error.message}`);
+                //Caso tenha dado algum erro que não permitiu a requisição dos dados, essa mensagem será exibida no terminal
+            });
+    }
+
+    //Função que plota o gráfico com os dados obtidos
+    function plotarGrafico(resposta) {
         console.log('Começando plotagem dos graficos');
 
         //Essa LET irá listar a ordem de tentivas, número de respostas corretas e os títulos do gráfico
@@ -179,7 +192,7 @@ function plotarGrafico(resposta) {
         console.log(resposta.certas);
 
         //Essa é uma estrutura de loop, nesse for eu percorro os dados dos quizzes para sempre pegar as certas dos 5 últimos quizzes e preencher os arrays "labels[]" e "data"
-        for (i = 0; i < resposta.length; i++){
+        for (i = 0; i < resposta.length; i++) {
             //Crio essa let com um nome chamativo, pois é uma let importante e não posso esquecer, assim fica mais fácil de achar. Ela armazena o índice das respostas
             let chupeta = resposta[i];
             //Aqui eu "Jogo" esses índices no gráfico e somo mais 1, para começar a partir do número 1 e não do 0

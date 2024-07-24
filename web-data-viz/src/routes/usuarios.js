@@ -53,4 +53,14 @@ router.get("/ranking", function(req, res){
     usuarioController.ranking(req, res);
 })
 
+//24/07/2024 --> Rota para armazenar a escolha dos usuários
+router.post("/avaliar_banco", function (req, res) {
+    usuarioController.avaliar_banco(req, res);
+});
+
+//24/07/2024 --> Rota para fazer o select que vai do banco p/o gráfico
+router.post("/buscarAvaliacao", function (req, res) {
+    usuarioController.buscarAvaliacao(req, res);
+});
+
 module.exports = router;

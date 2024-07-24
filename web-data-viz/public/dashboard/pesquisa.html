@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz | On-Beach</title>
+
+    <link rel="shortcut icon" type="imagex/png" href="on_beach.png">
+
+    <link rel="stylesheet" href="./../css/dashboards.css">
+    <link rel="stylesheet" href="./../css/estilo.css" />
+
+    <script src="../js/sessao.js"></script>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,70
+        0;1,800;1,900&display=swap" rel="stylesheet">
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://kit.fontawesome.com/9f7414eb10.js" crossorigin="anonymous"></script> -->
+</head>
+
+<!--24/07/2024 -- Criando uma página para o cliente avaliar o nosso site, logo abaixo, no body eu estruturo a forma como quero que seja inicialmente-->
+
+<body>
+
+    <div class="janela">
+
+        <div class="header-left dash-header">
+            <img src="./../css/img/on_beach.png" alt="">
+            <h1>On-Beach</h1>
+
+            <div class="hello">
+                <h3>Ajude-nos a melhorar, <span id="b_usuario">usuário</span>!</h3>
+            </div>
+
+
+            <div class="btn-nav-inicio">
+                <a href="./inicial.html">
+                    <h3>Início</h3>
+                </a>
+            </div>
+
+            <div class="btn-nav">
+                <a href="./cards.html">
+                    <h3>Quiz</h3>
+            </div>
+
+            <div class="btn-nav-white">
+                <a href="./dashboard.html">
+                    <h3>Gráficos</h3>
+                </a>
+            </div>
+
+            <div class="btn-nav-jornada">
+                <a href="./evolucao.html">
+                    <h3>Jornada</h3>
+                </a>
+            </div>
+
+            <div class="btn-nav-ranking">
+                <a href="./ranking.html">
+                    <h3>Ranking</h3>
+                </a>
+            </div>
+
+            <div class="btn-nav-ranking">
+                <a href="./pesquisa.html">
+                    <h3>Pesquisa</h3>
+                </a>
+            </div>
+
+            <div class="btn-nav-ranking">
+                <a href="./satisfa.html">
+                    <h3>Avaliação</h3>
+                </a>
+            </div>
+
+            <div class="btn-logout" onclick="limparSessao()">
+                <h3>Sair</h3>
+            </div>
+
+        </div>
+
+        <!--24/07/2024 -- Estruturando o formulário, de forma padronizada com o quiz-->
+        <div class="dash">
+            <div id="quizContainer">
+                <div class="iniciarQuiz" id="inicarQuiz">
+                    <h1>Avalie nosso site!</h1>
+                    <p>Clique em "Iniciar"</p>
+                    <button onclick="iniciar()">Iniciar</button>
+                </div>
+                <div id="quiz" style="display: none;">
+                    <div id="pergunta1" class="pergunta">
+                        <h2>Dê uma nota ao site de 0 a 5, onde maior a nota, maior sua satisfação</h2>
+                        <!--24/07/2024 -- Cada botão de resposta chama a função responder(this, 'Resposta Correta') quando clicado, onde 'Resposta Correta' é a resposta correta para a pergunta. Nesse caso qualquer resposta está correta, pois este é um formulário e não um quiz-->
+                        <button onclick="responder(this, '0')">0</button>
+                        <button onclick="responder(this, '1')">1</button>
+                        <button onclick="responder(this, '2')">2</button>
+                        <button onclick="responder(this, '3')">3</button>
+                        <button onclick="responder(this, '4')">4</button>
+                        <button onclick="responder(this, '5')">5</button>
+                    <div id="oh_mae"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+//24/07/2024 --> Criação de variáveis para manpular posteriormente, elas guardam os valores de resposta do formulário 
+
+
+    //24/07/2024 --> Define o nome do usuário a partir da sessão
+    const b_usuario = document.getElementById('b_usuario');
+    if (sessionStorage.NOME_USUARIO) {
+        b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
+    } else {
+        b_usuario.innerHTML = 'usuário';
+    }
+
+    //24/07/2024 --> Criação da função que esconde o contêiner de início do quiz (iniciarQuiz) e exibe o contêiner das perguntas (quiz).
+    function iniciar() {
+        document.getElementById('inicarQuiz').style.display = 'none';
+        document.getElementById('quiz').style.display = 'flex';
+    }
+    //24/07/2024 --> Recebe o botão clicado e a resposta selecionada como parâmetros.
+    function responder(botao, respostaCorreta) {
+        const respostaSelecionada = botao.textContent;
+        respostaSelecionada === respostaCorreta
+
+        //24/07/2024 --> Criação do fetch para armazenar os dados no banco através 
+        fetch("/usuarios/avaliar_banco", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                respostaSelecionadaServer: respostaSelecionada,
+                idUsuarioServer: sessionStorage.ID_USUARIO,
+            }),
+        })
+        window.location.href = './satisfa.html'
+    }
+
+
+
+</script>
