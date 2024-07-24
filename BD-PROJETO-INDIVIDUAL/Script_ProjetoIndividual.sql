@@ -16,32 +16,16 @@ fkUsuario INT,
 foreign key (fkUsuario) references usuario(idUsuario)
 );
 
--- 12/07/2024
-CREATE TABLE frequencia(
-idFrequencia INT PRIMARY KEY AUTO_INCREMENT,
-frequencia ENUM('alta', 'media', 'baixa'), -- O ENUM serve para restringir os valores que virâo como frequência
+-- 24/07/2024 --> Criando a tabela que aramazenará as respostas de satisfação dos usuários
+CREATE TABLE satisfacao(
+idSatisfacao INT PRIMARY KEY AUTO_INCREMENT,
+nota INT,
+fkUsuario INT,
 foreign key (fkUsuario) references usuario(idUsuario)
 );
 
-select * from usuario; 
-select quiz.certas, quiz.erradas, usuario.nome from quiz
-	join usuario
-		on fkUsuario = idUsuario;
-        
-SELECT nome, certas FROM (SELECT nome, certas FROM quiz JOIN usuario ON fkUsuario = idUsuario  ORDER BY certas DESC LIMIT 5) AS Top5 ORDER BY certas ASC;
+SELECT * FROM satisfacao;
 
-
-SELECT nome, certas FROM (SELECT nome, certas, ROW_NUMBER() OVER (PARTITION BY nome ORDER BY certas DESC) AS rn FROM quiz JOIN usuario ON idUsuario = fkUsuario) AS rankeado WHERE rn = 1  ORDER BY certas ASC LIMIT 10;
-
-SELECT 
-    usuario.nome, 
-    MAX(quiz.certas) AS 'Pontuação'
-FROM 
-    quiz
-JOIN
-    usuario ON quiz.fkUsuario = usuario.idUsuario
-GROUP BY 
-    usuario.nome
-ORDER BY 
-    Pontuação DESC;
-
+SELECT nota, COUNT(*) AS quantidade
+FROM satisfacao
+GROUP BY nota;
