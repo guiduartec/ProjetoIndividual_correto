@@ -291,11 +291,11 @@ function ranking(req, res){
 
 //24/07/2024 --> Controller para o armazenamento no banco
 function avaliar_banco(req, res) {
-    // Variável que recupera os valores do cadastro.html
+    // Variável que recupera os valores do pesquisa.html
     var respostaSelecionada = req.body.respostaSelecionadaServer;
     var idUsuario = req.body.idUsuarioServer;
 
-        // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
+        // Passa os valores como parâmetro
         usuarioModel.avaliar_banco(respostaSelecionada, idUsuario)
             .then(
                 function (resultado) {

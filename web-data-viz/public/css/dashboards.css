@@ -520,17 +520,85 @@ canvas {
     color: white;
 }
 
+
+/*02/08/2024 -- Arrumando o CSS do gráfico de jornada
+Eu tinha padronizado ele com o gráfico de resultado do quiz, mas ficou desproporcional,
+ então eu criei uma div para ele(grafico2) e arrumo o CSS dela
+*/
+
+.dash .cara_do_momento {
+  width: 100%;
+  position: relative;
+  top: 0;
+  left: 20%;
+  background-size: cover;
+  background-position: center;
+  /* height: 100vh; */
+  overflow: auto;
+}
+
 .cara_do_momento {
   height: fit-content;
   margin-top: 100px;
 }
 
+/* Estilo do contêiner do gráfico */
 #grafico2 {
   margin: 30px;
   background-color: rgb(79 0 119 / 34%);
   border-radius: 20px;
   color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+  /* Ajuste o tamanho do contêiner para manter o layout */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
+/* Ajuste de tamanho do contêiner do gráfico */
+.graph2 {
+  width: 100%;
+  max-width: 800px;
+  min-height: 400px; /* garantir uma altura mínima */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Ajuste de tamanho do canvas para ocupar todo o espaço do contêiner */
+canvas#myChart {
+  width: 100%;
+  height: 100%; /* Ajusta o canvas para ocupar todo o espaço do contêiner */
+}
+
+/*02/08/2024 -- Arrumando o CSS do gráfico de satisfação
+Eu tinha padronizado ele com o gráfico de resultado do quiz, mas ficou desproporcional,
+ então eu criei uma div para ele(grafico3) e arrumo o CSS dela
+*/
+#grafico3 {
+  margin: 30px;
+  background-color: rgb(79 0 119 / 34%);
+  border-radius: 20px;
+  color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/*02/08/2024 -- Ajustando o Gráfico que está dentro de "grafico3"*/
+.graph3 {
+  width: 100%;
+  max-width: 500px;
+}
+
+/*02/08/2024 -- Garantindo que essa div se ajuste dentro do contâiner */
+canvas#myChartCanvas3 {
+  width: 100%;
+  height: auto;
+}
+ 
 /* #graficos{
   display: flex;
   justify-content: center;

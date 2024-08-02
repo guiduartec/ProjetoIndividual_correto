@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz | On-Beach</title>
-    
-    <link rel="shortcut icon" type="imagex/png" href="on_beach.png"> 
+
+    <link rel="shortcut icon" type="imagex/png" href="on_beach.png">
 
     <link rel="stylesheet" href="./../css/dashboards.css">
     <link rel="stylesheet" href="./../css/estilo.css" />
@@ -34,7 +34,7 @@
                 <h3>Vamos lá, <span id="b_usuario">usuário</span>?</h3>
             </div>
 
-            
+
             <div class="btn-nav-inicio">
                 <a href="./inicial.html">
                     <h3>Início</h3>
@@ -42,12 +42,15 @@
             </div>
 
             <div class="btn-nav">
-                <h3>Quiz</h3>
+                <a href="./cards.html">
+                    <h3>Quiz</h3>
+                </a>
             </div>
 
+            <!--02/08/2024 --Arrumando detalhes-- Tudo que antes estava como "Gráficos" no card da página de dash, eu mudei para "Resultado"-->
             <div class="btn-nav-white">
                 <a href="./dashboard.html">
-                    <h3>Gráficos</h3>
+                    <h3>Resultado</h3>
                 </a>
             </div>
 
@@ -81,7 +84,7 @@
 
         </div>
 
-         <div class="dash">
+        <div class="dash">
             <div id="quizContainer">
                 <div class="iniciarQuiz" id="inicarQuiz">
                     <h1>Quiz Praias</h1>
@@ -189,7 +192,7 @@
 
     var perguntaAtual = 1;
     var totalDePerguntas = 10; // Corrigido para o número real de perguntas
-    
+
     function responder(botao, respostaCorreta) {
         const respostaSelecionada = botao.textContent;
         if (respostaSelecionada === respostaCorreta) {
@@ -201,7 +204,7 @@
         if (perguntaAtual < totalDePerguntas) {
             perguntaAtual++;
             document.getElementById("pergunta" + perguntaAtual).style.display = "block";
-        } else {    
+        } else {
             fala_que_te_escuto.innerHTML = `<button onclick="jogar_banco(), timeout">Finalizar</button>` //exibirResultados();
         }
     }

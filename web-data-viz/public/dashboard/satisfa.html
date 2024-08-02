@@ -51,7 +51,7 @@
 
         <div class="btn-nav-white">
             <a href="./dashboard.html">
-                <h3>Gráficos</h3>
+                <h3>Resultado</h3>
             </a>
         </div>
 
@@ -119,17 +119,20 @@ window.onload = exibirAvaliacaoDosUsuarios();
 
 //24/07/2024 --> Define a função exibirAvaliacaoDosUsuarios para ser chamada quando a página for carregada e plotar a div que guarda o gráfico.
 function exibirAvaliacaoDosUsuarios() {
-    document.getElementById("graficos").innerHTML += `
-    <div id="grafico">
+    document.getElementById("graficos").innerHTML +=
+    //02/08/2024 --Arrumando detalhes-- -> Criação das divs "grafico3", "graph3" e "myChartCanvas3" para não ficar padrão e ter uma melhor manipulação delas no CSS
+     `
+    <div id="grafico3">
         <h3 class="tituloGraficos">
             <span id="tituloGrafico">Gráfico de Satisfação</span>
         </h3>
-        <div class="graph">
-            <canvas id="myChartCanvas"></canvas>
+        <div class="graph3">
+            <canvas id="myChartCanvas3"></canvas>
         </div>
         <div class="label-captura">
-            <p id="avisoCaptura" style="color: white">Gráficos</p>
+            <p id="avisoCaptura" style="color: white">Resultado</p>
         </div>
+    </div>
     `;
 
     chamar_avaliacao();
@@ -178,7 +181,7 @@ function plotarGrafico() {
     console.log('Iniciando plotagem do gráfico...');
 
     //24/07/2024 --> Obtém o contexto 2D do canvas onde o gráfico será desenhado e posteriormente plotados.
-    var grafico_canvas = document.getElementById('myChartCanvas').getContext('2d');
+    var grafico_canvas = document.getElementById('myChartCanvas3').getContext('2d');
 
         //24/07/2024 --> Cria um novo gráfico do tipo pizza usando o Chart.js. As labels são os valores de nota_vetor e os dados são os valores de quantidade_vetor.  As cores de fundo são definidas para cada nota do gráfico.
     new Chart(grafico_canvas, {

@@ -53,7 +53,7 @@ CRIEI ESSA PÁGINA PARA DEMONSTRAR AO USUÁRIO A SUA JORNADA. AQUI ELE VERÁ SEU
 
             <div class="btn-nav-white">
                 <a href="./dashboard.html">
-                    <h3>Gráficos</h3>
+                    <h3>Resultado</h3>
                 </a>
             </div>
 
@@ -69,9 +69,10 @@ CRIEI ESSA PÁGINA PARA DEMONSTRAR AO USUÁRIO A SUA JORNADA. AQUI ELE VERÁ SEU
                 </a>
             </div>
 
+            <!--02/08/2024 --Arrumando detalhes-- Arrumando referenciação-->
             <div class="btn-nav-ranking">
-                <a href="./satisfa.html">
-                    <h3>Satisfação</h3>
+                <a href="./pesquisa.html">
+                    <h3>Pesquisa</h3>
                 </a>
             </div>
 
@@ -94,7 +95,6 @@ CRIEI ESSA PÁGINA PARA DEMONSTRAR AO USUÁRIO A SUA JORNADA. AQUI ELE VERÁ SEU
             </div>
 
             <div class="btns-dash" id="btnQuiz">
-                <!-- O gráfico é chamado de acordo com o id (fk_aquario) do banco  -->
             </div>
         </div>
     </div>
@@ -124,7 +124,7 @@ CRIEI ESSA PÁGINA PARA DEMONSTRAR AO USUÁRIO A SUA JORNADA. AQUI ELE VERÁ SEU
         <h3 class="tituloGraficos">
             <span id="tituloGrafico">Últimas 5 tentativas</span>
         </h3>
-        <div class="graph">
+        <div class="graph2">
             <canvas id="myChart"></canvas>
         </div>
         <div class="label-captura">
@@ -176,7 +176,7 @@ CRIEI ESSA PÁGINA PARA DEMONSTRAR AO USUÁRIO A SUA JORNADA. AQUI ELE VERÁ SEU
         //Essa LET irá listar a ordem de tentivas, número de respostas corretas e os títulos do gráfico
         let labels = [];
 
-        //Objeto que contém os dados do gráficos
+        //Objeto que contém os dados do Resultado
         let dados = {
             labels: labels,
             datasets: [{
